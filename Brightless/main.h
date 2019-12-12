@@ -10,7 +10,7 @@
 #define STR_MSG_ASKFS			"フルスクリーンで起動しますか？"
 
 enum GAME_SCENE { Title, Game, Clear, GameOver, Reset };
-
+enum PL_NUM { PL_1, PL_2 };
 // 構造体定義
 
 
