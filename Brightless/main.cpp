@@ -1,64 +1,119 @@
 #include "main.h"
 #include "DxLib.h"
 
+#include "common.h"
+
 //////////////////////////////////////////////////////////////////////////
 //	各ゲームで使用するクラスインスタンスやグローバル変数はここに記述
 //
-GAME_SCENE scene;
+GAME_STATE  state;
+TITLE       title;
+CHOICE      choice;
+GAME        game;
 
 //
 // 定義ここまで
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-//	ここからゲームの処理
-//
-
 // ゲーム開始前処理
 void AfterInit(void)
 {
-	scene = Title;
+    state = Title;
 }
-//タイトル更新処理
-void UpdateTitle(int GameTime)
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+//	ここからタイトルの処理
+//
+
+// タイトル初期化処理
+void TITLE::init(void)
 {
 
 }
 
-// ゲーム描画処理
-void TitleDraw(int GameTime)
+// タイトル更新処理
+void TITLE::update(int GameTime)
+{
+
+}
+
+// タイトル描画処理
+void TITLE::draw(int GameTime)
+{
+
+}
+
+// タイトル終了処理
+void TITLE::end(void)
+{
+
+}
+
+//
+//	タイトルの処理ここまで
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+//	ここからステージ選択の処理
+//
+
+// ステージ選択初期化処理
+void CHOICE::init(void)
+{
+
+}
+
+// ステージ選択更新処理
+void CHOICE::update(int GameTime)
+{
+
+}
+
+// ステージ選択描画処理
+void CHOICE::draw(int GameTime)
+{
+
+}
+
+// ステージ選択終了処理
+void CHOICE::end(void)
+{
+
+}
+
+//
+//	ステージ選択の処理ここまで
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+//	ここからゲームの処理
+//
+
+// ゲーム初期化処理
+void GAME::init(void)
 {
 
 }
 
 // ゲーム更新処理
-void UpdateGame(int GameTime)
+void GAME::update(int GameTime)
 {
 
 }
 
 // ゲーム描画処理
-void GameDraw(int GameTime)
+void GAME::draw(int GameTime)
 {
 
 }
 
 // ゲーム終了処理
-void ResetGame(void)
+void GAME::end(void)
 {
 
 }
-
-void UpdateClear(int GameTime)
-{
-
-}
-
-void UpdateGameOver(int GameTime)
-{
-
-}
-
 
 //
 //	ゲームの処理ここまで
@@ -85,36 +140,24 @@ void MainLoop(void)
 
 	while (ProcessMessage() == 0)		// ProcessMessageが正常に処理されている間はループ
 	{
-		switch (scene)
+        ClearDrawScreen;				// 裏画面を削除
+
+		switch (state)
 		{
 		case Title:
-			UpdateTitle(gameTime);			// タイトル更新処理
-			ClearDrawScreen;				// 裏画面を削除
-			TitleDraw(gameTime);			// タイトル描画処理
-			ScreenFlip();					// VSYNCを待つ
+			title.update(gameTime);         // タイトル更新処理
+			title.draw(gameTime);           // タイトル描画処理
 			break;
+        case Choice:
+            choice.update(gameTime);        // ステージ選択更新処理
+            choice.draw(gameTime);          // ステージ選択描画処理
+            break;
 		case Game:
-			UpdateGame(gameTime);			// ゲーム更新処理
-			ClearDrawScreen;				// 裏画面を削除
-			GameDraw(gameTime);				// ゲーム描画処理
-			ScreenFlip();					// VSYNCを待つ
-			break;
-		case Clear:
-			UpdateClear(gameTime);			// クリア画面更新処理
-			ClearDrawScreen;				// 裏画面を削除
-			ScreenFlip();					// VSYNCを待つ
-			break;
-		case GameOver:
-			UpdateGameOver(gameTime);		// ゲームオーバー画面更新処理
-			ClearDrawScreen;				// 裏画面を削除
-			ScreenFlip();					// VSYNCを待つ
-			break;
-		case Reset:
-			ResetGame;
-			ClearDrawScreen;				// 裏画面を削除
-			ScreenFlip();					// VSYNCを待つ
+			game.update(gameTime);          // ゲーム更新処理
+			game.draw(gameTime);            // ゲーム描画処理
 			break;
 		}
+        ScreenFlip();// VSYNCを待つ
 		// ESCキーだけは常に監視。押されたら直ちに終了
 		int stick = CheckHitKey(KEY_INPUT_ESCAPE);
 		if (stick == 1) break;
@@ -129,7 +172,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	BeforeInit();						// DirectX初期化前処理
 	if (DxLib_Init() == -1) return -1;	// エラーが起きたら直ちに終了
 
-	SetGraphMode(1920, 1080, 32);
+	SetGraphMode(GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT, 32);
 	SetDrawScreen(DX_SCREEN_BACK);		// 描画スクリーンを裏側に指定
 	SetWaitVSyncFlag(TRUE);				// VSYNCを有効にする
 	AfterInit();						// DirectX初期化後処理

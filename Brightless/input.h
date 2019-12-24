@@ -3,13 +3,14 @@
 // 定数 ----------------------------------------------------------------
 enum THUMB
 {
-    Not,
-    Up, Before_Upper_Right, Upper_Right, After_Upper_Right,
-    Right, Before_Lower_Right, Lower_Right, After_Lower_Right,
-    Down, Before_Lower_Left, Lower_Left, After_Lower_Left,
-    Left, Before_Upper_Left, Upper_Left, After_Upper_Left,
-    Little_Up, Little_Right, Little_Down, Little_Left,
-    Little_Upper_Right, Little_Lower_Right, Little_Lower_Left, Little_Upper_Left
+    Not,    // 入力なし
+    Up, Before_Upper_Right, Upper_Right, After_Upper_Right,     // 上から右
+    Right, Before_Lower_Right, Lower_Right, After_Lower_Right,  // 右から下
+    Down, Before_Lower_Left, Lower_Left, After_Lower_Left,      // 下から左
+    Left, Before_Upper_Left, Upper_Left, After_Upper_Left,      // 左から上
+    Little_Up, Little_Right, Little_Down, Little_Left,      // 中くらい倒してる時
+    Little_Upper_Right, Little_Lower_Right, Little_Lower_Left, Little_Upper_Left,
+    Roughly_Up, Roughly_Right, Roughly_Left, Roughly_Down   // 他の入力に関係なく各上下左右を取る
 };
 
 /// InputClass How to
