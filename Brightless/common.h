@@ -7,4 +7,20 @@
 #define ROOT2       (1.41421356f)       // Å„2
 #define ROOT5       (2.2360679f)        // Å„5
 
-enum PL_NUM { PL_1, PL_2 };
+enum PL_Num { PL_1, PL_2 };
+enum Scene_State { Title, Choice, Game };
+
+class Sprite
+{
+public:
+    virtual void update() = 0;
+    virtual void draw() = 0;
+
+protected:
+    int posX = 0;
+    int posY = 0;
+    float posXF = 0;
+    float posYF = 0;
+    int width = 0;
+    int height = 0;
+};

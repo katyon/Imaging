@@ -1,7 +1,8 @@
 #pragma once
-#include "main.h"
+#include "common.h"
+
 // 定数 ----------------------------------------------------------------
-enum THUMB
+enum Thumb
 {
     Not,    // 入力なし
     Up, Before_Upper_Right, Upper_Right, After_Upper_Right,     // 上から右
@@ -34,28 +35,35 @@ public:
     // 入力更新
     void Updata();
     // 押した瞬間だけTRUEを返す
-    bool GetButtonDown(PL_NUM playerNum, int inputKey);
-    // 押した瞬間だけTRUEを返す(全てのボタン)
-    bool GetALLButtonDown(PL_NUM plNum);
+    bool GetKeyDown(int inputKey);
+    // 押した瞬間だけTRUEを返す(全てのキー)
+    bool GetKeyDownAll(void);
     // 押している間TRUEを返す
-    bool GetButton(PL_NUM playerNum, int inputKey);
+    bool GetKey(int inputKey);
+    // 押した瞬間だけTRUEを返す
+    bool GetButtonDown(PL_Num playerNum, int inputKey);
+    // 押した瞬間だけTRUEを返す(全てのボタン)
+    bool GetButtonDownAll(PL_Num plNum);
+    // 押している間TRUEを返す
+    bool GetButton(PL_Num playerNum, int inputKey);
     // 左スティックを倒している方向の値を返す
-    bool GetLeftThumb(PL_NUM plNum, int  LeftThumb);
+    bool GetLeftThumb(PL_Num plNum, int  LeftThumb);
     // 右スティックを倒している方向の値を返す
-    bool GetRightThumb(PL_NUM plNum, int  RightThumb);
+    bool GetRightThumb(PL_Num plNum, int  RightThumb);
 
 private:
     XINPUT_STATE input[2] = {};
-    int key[2][16] = {};	// 入力情報
+    char key[256] = {};// 入力情報
+    int button[2][16] = {};
     int ThumbLX[2] = {};
     int ThumbLY[2] = {};
     int ThumbRX[2] = {};
     int ThumbRY[2] = {};
-    enum BUTTON_STATE
+    enum Input_State
     {
         Not, Down, Stay
     };
-    enum THUMB_STATE
+    enum Thumb_State
     {
         Zero, Mid, Max
     };
