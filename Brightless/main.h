@@ -20,9 +20,10 @@ enum sprHandle_Num
 class Usable
 {
 public:
-    void BeforeInit(void);
-    void AfterInit(void);
-    void MainLoop(void);
+    void BeforeInit(void);  // DirectX初期化前処理
+    void AfterInit(void);   // ゲーム開始前処理
+    void MainLoop(void);    // ゲームメインループ
+    void End(void);         // ゲーム終了後処理
 };
 
 // メインループ用の親クラス

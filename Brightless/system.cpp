@@ -1,19 +1,27 @@
 // インクルード -------------------------------------------------------------------------------------
 #include "DxLib.h"
 
-#include "common.h"
-#include "main.h"
 #include "system.h"
 
-// 関数 ----------------------------------------------------------------------------------------
+#include "input.h"
 
+// 関数 ----------------------------------------------------------------------------------------
 // デバック文字を描画
 void System::drawDebugString()
 {
     cr = GetColor(255, 255, 255);
 
-    DrawFormatString(10, 10, cr, "abcde");
+    if (Input::GetInstance()->GetKey(KEY_INPUT_1))
+        DrawFormatString(10, 10, cr, "GetKey");
+    if (Input::GetInstance()->GetKeyDown(KEY_INPUT_2))
+        DrawFormatString(10, 30, cr, "GetKeyDown");
+    if (Input::GetInstance()->GetKeyDownAll())
+        DrawFormatString(10, 50, cr, "GetKeyDownAll");
+    if (Input::GetInstance()->GetButtonDown(PL_1, XINPUT_BUTTON_A))
+        DrawFormatString(10, 70, cr, "GetButtonDown");
 
+    DrawFormatString(10, 90, cr, "KEY_INPUT_3:%d", Input::GetInstance()->GetKeyDebug(KEY_INPUT_3));
+    DrawFormatString(10, 110, cr, "XINPUT_BUTTON_B:%d", Input::GetInstance()->GetButtonDebug(XINPUT_BUTTON_B));
 }
 
 // シーン遷移処理

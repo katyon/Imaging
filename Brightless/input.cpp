@@ -1,7 +1,6 @@
 // インクルード --------------------------------------------------
 #include "DxLib.h"
 
-#include "common.h"
 #include "Input.h"
 
 // 関数実体 ------------------------------------------------------
@@ -136,6 +135,38 @@ void Input::Updata()
                 ThumbRY[j] = -Max;
         }
 #pragma endregion
+    }
+}
+
+int Input::GetKeyDebug(int inputKey)
+{
+    switch (key[inputKey])
+    {
+    case Not:
+        return 0;
+        break;
+    case Down:
+        return 1;
+        break;
+    case Stay:
+        return 2;
+        break;
+    }
+}
+
+int Input::GetButtonDebug(int inputKey)
+{
+    switch (button[PL_1][inputKey])
+    {
+    case Not:
+        return 0;
+        break;
+    case Down:
+        return 1;
+        break;
+    case Stay:
+        return 2;
+        break;
     }
 }
 

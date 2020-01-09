@@ -1,4 +1,5 @@
 #pragma once
+// インクルード ---------------------------------------------------------
 #include "common.h"
 
 // 定数 ----------------------------------------------------------------
@@ -50,6 +51,10 @@ public:
     bool GetLeftThumb(PL_Num plNum, int  LeftThumb);
     // 右スティックを倒している方向の値を返す
     bool GetRightThumb(PL_Num plNum, int  RightThumb);
+
+
+    int GetKeyDebug(int inputKey);
+    int GetButtonDebug(int inputKey);
 
 private:
     XINPUT_STATE input[2] = {};

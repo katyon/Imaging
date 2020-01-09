@@ -41,7 +41,6 @@ void Scene_Title::update(int GameTime)
 // タイトル描画処理
 void Scene_Title::draw(int GameTime)
 {
-    if(Input::GetInstance()->GetButtonDownAll(PL_1))
     sys.drawDebugString();
 }
 
@@ -136,7 +135,23 @@ void Usable::BeforeInit(void)
 // ゲーム開始前処理
 void Usable::AfterInit(void)
 {
+    // InputClass
+    Input::Create();
+    Input::GetInstance()->Init();
+
     state = Title;
+    title.init();
+}
+
+// ゲーム終了後処理
+void Usable::End(void)
+{
+    // InputClassの終了処理
+    Input::Destroy();
+    // 全グラフィックの削除
+    DxLib::InitGraph();
+    // 全音データの削除
+    InitSoundMem();
 }
 
 // ゲームメインループ
@@ -146,9 +161,11 @@ void Usable::MainLoop(void)
 
     usable.AfterInit();    // ゲーム開始前処理
 
-    while (ProcessMessage() == 0)		// ProcessMessageが正常に処理されている間はループ
+    while (ProcessMessage() == 0)		    // ProcessMessageが正常に処理されている間はループ
     {
-        ClearDrawScreen();				// 裏画面を削除
+        ClearDrawScreen();  				// 裏画面を削除
+
+        Input::GetInstance()->Updata();     // 入力状態の更新処理
 
         switch (state)
         {
@@ -186,6 +203,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     SetWaitVSyncFlag(TRUE);             // VSYNCを有効にする
     usable.AfterInit();                 // DirectX初期化後処理
     usable.MainLoop();                  // ゲーム本体(メインループ)
+    usable.End();                       // ゲーム終了後処理
     DxLib_End();                        // ＤＸライブラリ使用の終了処理
     return 0;                           // ソフトの終了
 }
