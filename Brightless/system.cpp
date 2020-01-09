@@ -19,9 +19,6 @@ void System::drawDebugString()
         DrawFormatString(10, 50, cr, "GetKeyDownAll");
     if (Input::GetInstance()->GetButtonDown(PL_1, XINPUT_BUTTON_A))
         DrawFormatString(10, 70, cr, "GetButtonDown");
-
-    DrawFormatString(10, 90, cr, "KEY_INPUT_3:%d", Input::GetInstance()->GetKeyDebug(KEY_INPUT_3));
-    DrawFormatString(10, 110, cr, "XINPUT_BUTTON_B:%d", Input::GetInstance()->GetButtonDebug(XINPUT_BUTTON_B));
 }
 
 // ƒV[ƒ“‘JˆÚˆ—

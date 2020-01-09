@@ -34,12 +34,13 @@ void Input::Updata()
     {
         if (key[i])
         {
-            if (key[i] == Not)
-                key[i] = Down;
-            else if (key[i] == Down)
-                key[i] = Stay;
+            if (key_buf[i] == Not)
+                key_buf[i] = Down;
+            else if (key_buf[i] == Down)
+                key_buf[i] = Stay;
         }
-        else key[i] = Not;
+        else key_buf[i] = Not;
+        key[i] = key_buf[i];
     }
 
     GetJoypadXInputState(DX_INPUT_PAD1, &input[0]);
@@ -135,38 +136,6 @@ void Input::Updata()
                 ThumbRY[j] = -Max;
         }
 #pragma endregion
-    }
-}
-
-int Input::GetKeyDebug(int inputKey)
-{
-    switch (key[inputKey])
-    {
-    case Not:
-        return 0;
-        break;
-    case Down:
-        return 1;
-        break;
-    case Stay:
-        return 2;
-        break;
-    }
-}
-
-int Input::GetButtonDebug(int inputKey)
-{
-    switch (button[PL_1][inputKey])
-    {
-    case Not:
-        return 0;
-        break;
-    case Down:
-        return 1;
-        break;
-    case Stay:
-        return 2;
-        break;
     }
 }
 
