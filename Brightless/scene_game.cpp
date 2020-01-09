@@ -2,29 +2,30 @@
 #include "DxLib.h"
 
 #include "input.h"
-#include "scene_title.h"
-#include "main.h"
+#include "scene_game.h"
+
 // ŠÖ” ----------------------------------------------------------------------------------------
-void Title_Bg::init(Title_Bg* title_bg)
+void Game_Bg::init(Game_Bg* game_bg)
 {
-    title_bg->handle = LoadGraph("Data\\Images\\Title_Bg.png");
+    game_bg->handle = LoadGraph("Data\\Images\\Game_Bg.png");
 }
 
-void Title_Bg::update(Title_Bg* title_bg)
+void Game_Bg::update(Game_Bg* game_bg)
 {
+
 }
 
-void Title_Bg::draw(Title_Bg* title_bg)
+void Game_Bg::draw(Game_Bg* game_bg)
 {
-    DrawGraphF(title_bg->posX, title_bg->posY, title_bg->handle, true);
+    DrawGraphF(game_bg->posX, game_bg->posY, game_bg->handle, true);
 }
 
-void Title_Bg::end(Title_Bg* title_bg)
+void Game_Bg::end(Game_Bg* game_bg)
 {
-    DeleteGraph(title_bg->handle);
+    DeleteGraph(game_bg->handle);
 }
 
-void Title_Conduct::updateDebug(Title_Conduct* title_conduct, Usable* usable)
+void Game_Conduct::updateDebug(Game_Conduct* game_conduct, Usable* usable)
 {
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_1)) usable->changeSceneStateInit(Title);
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_2)) usable->changeSceneStateInit(Choice);

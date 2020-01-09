@@ -2,29 +2,30 @@
 #include "DxLib.h"
 
 #include "input.h"
-#include "scene_title.h"
-#include "main.h"
+#include "scene_choice.h"
+
 // ŠÖ” ----------------------------------------------------------------------------------------
-void Title_Bg::init(Title_Bg* title_bg)
+void Choice_Bg::init(Choice_Bg* choice_bg)
 {
-    title_bg->handle = LoadGraph("Data\\Images\\Title_Bg.png");
+    choice_bg->handle = LoadGraph("Data\\Images\\Choice_Bg.png");
 }
 
-void Title_Bg::update(Title_Bg* title_bg)
+void Choice_Bg::update(Choice_Bg* choice_bg)
 {
+
 }
 
-void Title_Bg::draw(Title_Bg* title_bg)
+void Choice_Bg::draw(Choice_Bg* choice_bg)
 {
-    DrawGraphF(title_bg->posX, title_bg->posY, title_bg->handle, true);
+    DrawGraphF(choice_bg->posX, choice_bg->posY, choice_bg->handle, true);
 }
 
-void Title_Bg::end(Title_Bg* title_bg)
+void Choice_Bg::end(Choice_Bg* choice_bg)
 {
-    DeleteGraph(title_bg->handle);
+    DeleteGraph(choice_bg->handle);
 }
 
-void Title_Conduct::updateDebug(Title_Conduct* title_conduct, Usable* usable)
+void Choice_Conduct::updateDebug(Choice_Conduct* choice_conduct, Usable* usable)
 {
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_1)) usable->changeSceneStateInit(Title);
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_2)) usable->changeSceneStateInit(Choice);

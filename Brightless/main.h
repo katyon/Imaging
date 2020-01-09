@@ -9,13 +9,8 @@
 #define STR_MSGTTL_ASKFS		"起動処理"
 #define STR_MSG_ASKFS			"フルスクリーンで起動しますか？"
 
-#define SPR_MAX     (64)
+enum Scene_State { Title, Choice, Game };
 
-enum sprHandle_Num
-{
-    Title_Bg, Choice_Bg, Game_BG,
-    Player
-};
 // クラス --------------------------------------------------
 class Usable
 {
@@ -24,6 +19,7 @@ public:
     void AfterInit(void);   // ゲーム開始前処理
     void MainLoop(void);    // ゲームメインループ
     void End(void);         // ゲーム終了後処理
+    void changeSceneStateInit(Scene_State next_num);    // シーン遷移処理
 };
 
 // メインループ用の親クラス

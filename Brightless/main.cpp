@@ -3,6 +3,9 @@
 
 #include "common.h"
 #include "input.h"
+#include "scene_choice.h"
+#include "scene_game.h"
+#include "scene_title.h"
 #include "system.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -10,13 +13,18 @@
 //
 
 Usable          usable;
-Scene_Title     title;
-Scene_Choice    choice;
-Scene_Game      game;
 System          sys;
+Scene_Title     title;
+Title_Bg        title_bg;
+Title_Conduct   title_conduct;
+Scene_Choice    choice;
+Choice_Bg       choice_bg;
+Choice_Conduct  choice_conduct;
+Scene_Game      game;
+Game_Bg         game_bg;
+Game_Conduct    game_conduct;
 
 Scene_State     state;
-int             sprHandle[SPR_MAX] = { 0 };
 
 //
 // 定義ここまで
@@ -29,25 +37,27 @@ int             sprHandle[SPR_MAX] = { 0 };
 // タイトル初期化処理
 void Scene_Title::init(void)
 {
-
+    title_bg.init(&title_bg);
 }
 
 // タイトル更新処理
 void Scene_Title::update(int GameTime)
 {
-
+    title_bg.update(&title_bg);
+    title_conduct.updateDebug(&title_conduct, &usable);     // debug
 }
 
 // タイトル描画処理
 void Scene_Title::draw(int GameTime)
 {
-    sys.drawDebugString();
+    title_bg.draw(&title_bg);
+    sys.drawDebugString();      // debug
 }
 
 // タイトル終了処理
 void Scene_Title::end(void)
 {
-
+    title_bg.end(&title_bg);
 }
 
 //
@@ -61,25 +71,27 @@ void Scene_Title::end(void)
 // ステージ選択初期化処理
 void Scene_Choice::init(void)
 {
-
+    choice_bg.init(&choice_bg);
 }
 
 // ステージ選択更新処理
 void Scene_Choice::update(int GameTime)
 {
-
+    choice_bg.update(&choice_bg);
+    choice_conduct.updateDebug(&choice_conduct, &usable);   // debug
 }
 
 // ステージ選択描画処理
 void Scene_Choice::draw(int GameTime)
 {
-
+    choice_bg.draw(&choice_bg);
+    sys.drawDebugString();              // debug
 }
 
 // ステージ選択終了処理
 void Scene_Choice::end(void)
 {
-
+    choice_bg.end(&choice_bg);
 }
 
 //
@@ -93,25 +105,27 @@ void Scene_Choice::end(void)
 // ゲーム初期化処理
 void Scene_Game::init(void)
 {
-
+    game_bg.init(&game_bg);
 }
 
 // ゲーム更新処理
 void Scene_Game::update(int GameTime)
 {
-
+    game_bg.update(&game_bg);
+    game_conduct.updateDebug(&game_conduct, &usable);   // debug
 }
 
 // ゲーム描画処理
 void Scene_Game::draw(int GameTime)
 {
-
+    game_bg.draw(&game_bg);
+    sys.drawDebugString();      // debug
 }
 
 // ゲーム終了処理
 void Scene_Game::end(void)
 {
-
+    game_bg.end(&game_bg);
 }
 
 //
@@ -154,6 +168,40 @@ void Usable::End(void)
     InitSoundMem();
 }
 
+// シーン遷移処理
+void Usable::changeSceneStateInit(Scene_State next_num)
+{
+    // 現在のシーンの終了処理
+    switch (state)
+    {
+    case Title:
+        title.end();
+        break;
+    case Choice:
+        choice.end();
+        break;
+    case Game:
+        game.end();
+        break;
+    }
+
+    // シーン遷移時に初期化
+    switch (next_num)
+    {
+    case Title:
+        title.init();
+        break;
+    case Choice:
+        choice.init();
+        break;
+    case Game:
+        game.init();
+        break;
+    }
+
+    state = next_num;
+}
+
 // ゲームメインループ
 void Usable::MainLoop(void)
 {
@@ -182,6 +230,7 @@ void Usable::MainLoop(void)
             game.draw(gameTime);            // ゲーム描画処理
             break;
         }
+
         ScreenFlip();   // VSYNCを待つ
 
         // ESCキーだけは常に監視。押されたら直ちに終了

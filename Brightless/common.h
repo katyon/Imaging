@@ -8,19 +8,19 @@
 #define ROOT5       (2.2360679f)        // Å„5
 
 enum PL_Num { PL_1, PL_2 };
-enum Scene_State { Title, Choice, Game };
 
 class Sprite
 {
 public:
-    virtual void update() = 0;
-    virtual void draw() = 0;
+    virtual void init(void) {};
+    virtual void update(void) {};
+    virtual void draw(void) {};
+    virtual void end(void) {};
 
 protected:
-    int posX = 0;
-    int posY = 0;
-    float posXF = 0;
-    float posYF = 0;
+    float posX = 0;
+    float posY = 0;
     int width = 0;
     int height = 0;
+    int handle = 0;
 };
