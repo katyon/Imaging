@@ -40,6 +40,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="scene_game.h">
+    <ClInclude Include="player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -63,6 +64,7 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="scene_game.cpp">
+    <ClCompile Include="player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
