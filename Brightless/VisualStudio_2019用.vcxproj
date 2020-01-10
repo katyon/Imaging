@@ -159,6 +159,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="light.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="scene_title.cpp" />
     <ClCompile Include="system.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="light.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="scene_title.h" />
     <ClInclude Include="system.h" />
   </ItemGroup>
