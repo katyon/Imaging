@@ -18,7 +18,8 @@ enum Thumb
 /// InputClass How to
 // 1.Input.hをインクルードする
 // 2. Input::GetInstance()でインスタンスを経由してpublic関数を呼び出す。
-// 例）　Input::GetInstance()->GetButtonDown(PL_1, XINPUT_BUTTON_Y);
+// 例）  Input::GetInstance()->GetButtonDown(PL_1, XINPUT_BUTTON_Y);
+// 例２）Input::GetInstance()->GetLeftThumb(PL_1, Before_Upper_Right);
 
 class Input
 {
