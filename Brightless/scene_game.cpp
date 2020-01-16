@@ -7,6 +7,7 @@
 // ŠÖ” ----------------------------------------------------------------------------------------
 void Game_Bg::init(Game_Bg* game_bg)
 {
+    game_bg->posX = game_bg->posY = game_bg->rel_posX = game_bg->rel_posY = 0;
     game_bg->handle = LoadGraph("Data\\Images\\Game_Bg.png");
 }
 

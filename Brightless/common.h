@@ -17,9 +17,17 @@ public:
     virtual void draw(void) {};
     virtual void end(void) {};
 
+    virtual float getPosX() { return posX; }
+    virtual float getPosY() { return posY; }
+    virtual float getRelPosX() { return rel_posX; }
+    virtual float getRelPosY() { return rel_posY; }
+    virtual void setRelPosX(float x) { rel_posX = x; }
+    virtual void setRelPosY(float y) { rel_posY = y; }
 protected:
     float posX = 0;
     float posY = 0;
+    float rel_posX = 0;
+    float rel_posY = 0;
     int width = 0;
     int height = 0;
     int handle = 0;

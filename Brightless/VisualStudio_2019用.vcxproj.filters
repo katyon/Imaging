@@ -25,6 +25,12 @@
     <ClCompile Include="system.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="relative_position.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -55,6 +61,12 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="system.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="relative_position.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,9 @@
 #include "scene_game.h"
 #include "scene_title.h"
 #include "system.h"
+#include "player.h"
+#include "map.h"
+#include "relative_position.h"
 
 //////////////////////////////////////////////////////////////////////////
 //	各ゲームで使用するクラスインスタンスやグローバル変数はここに記述
@@ -23,6 +26,8 @@ Choice_Conduct  choice_conduct;
 Scene_Game      game;
 Game_Bg         game_bg;
 Game_Conduct    game_conduct;
+Player          player;
+MapData         map;
 
 Scene_State     state;
 
@@ -51,7 +56,7 @@ void Scene_Title::update(int GameTime)
 void Scene_Title::draw(int GameTime)
 {
     title_bg.draw(&title_bg);
-    sys.drawDebugString();      // debug
+    sys.drawDebugString(&player);      // debug
 }
 
 // タイトル終了処理
@@ -85,7 +90,7 @@ void Scene_Choice::update(int GameTime)
 void Scene_Choice::draw(int GameTime)
 {
     choice_bg.draw(&choice_bg);
-    sys.drawDebugString();              // debug
+    sys.drawDebugString(&player);              // debug
 }
 
 // ステージ選択終了処理
@@ -106,6 +111,9 @@ void Scene_Choice::end(void)
 void Scene_Game::init(void)
 {
     game_bg.init(&game_bg);
+    map.init();
+    player.init();
+    Scroll::get_instance().init();
 }
 
 // ゲーム更新処理
@@ -113,13 +121,18 @@ void Scene_Game::update(int GameTime)
 {
     game_bg.update(&game_bg);
     game_conduct.updateDebug(&game_conduct, &usable);   // debug
+    player.update();
+    map.update(&player);
+    Scroll::get_instance().update(&player, &map, &game_bg);
 }
 
 // ゲーム描画処理
 void Scene_Game::draw(int GameTime)
 {
     game_bg.draw(&game_bg);
-    sys.drawDebugString();      // debug
+    map.draw();
+    player.draw();
+    sys.drawDebugString(&player);      // debug
 }
 
 // ゲーム終了処理
