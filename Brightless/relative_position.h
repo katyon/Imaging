@@ -15,7 +15,7 @@ public:
 	Scroll(Scroll&&) = delete;
 	Scroll& operator=(Scroll&&) = delete;
 
-	static Scroll& get_instance()
+	static Scroll& getInstance()
 	{
 		static Scroll instance;
 		return instance;
@@ -32,6 +32,16 @@ public:
 	void setScrollAmountX(float a) { scroll_amountX = a; }
 	void setScrollAmountY(float a) { scroll_amountY = a; }
 
+	float getScrollSpeedX() { return scroll_speed_x; }
+	float getScrollSpeedY() { return scroll_speed_y; }
+	void setScrollSpeedX(float s) { scroll_speed_x = s; }
+	void setScrollSpeedY(float s) { scroll_speed_y = s; }
+
+	float getScrollDestPos() { return scroll_dest_pos; }
+	void setScrollDestPos(float d) { scroll_dest_pos = d; }
+
+	void autoScroll(Player* player);
+
 	void debugScroll();
 
 private:
@@ -39,4 +49,9 @@ private:
 	~Scroll() = default;
 	float scroll_amountX;
 	float scroll_amountY;
+
+	float scroll_speed_x;
+	float scroll_speed_y;
+
+	float scroll_dest_pos;
 };

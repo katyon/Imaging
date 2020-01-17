@@ -5,7 +5,7 @@
 
 // íËêî ----------------------------------------------------
 #define PLAYER_WIDTH		(100)
-#define PLAYER_HEIGHT		(200)
+#define PLAYER_HEIGHT		(200)	
 
 #define PLAYER_SPEED		(10)
 #define PLAYER_SPEED_MAX	(20)
@@ -36,6 +36,8 @@ public:
 	float		getSpeedY();
 	void		setSpeedX(float x);
 	void		setSpeedY(float y);
+
+	bool		getFlip() { return flip; }
 
 	void		setOnGround(bool g);
 

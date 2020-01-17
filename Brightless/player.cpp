@@ -22,7 +22,7 @@ void Player::update()
 
 void Player::draw()
 {
-	DrawGraph(rel_posX, rel_posY, handle, TRUE);
+	DrawGraphF(rel_posX, rel_posY, handle, TRUE);
 }
 
 
@@ -90,8 +90,8 @@ void Player::movePlayer()
 	posY += speedY;
 
 	// プレイヤーキャラクターの向き反転処理
-	if (speedX > 0) { flip = false; }
-	else { flip = true; }
+	//if (speedX > 0) { flip = false; }
+	//else { flip = true; }
 
 	// ジャンプから降下への切替
 	if (speedY > 0) { isjump = false; }

@@ -113,7 +113,7 @@ void Scene_Game::init(void)
     game_bg.init(&game_bg);
     map.init();
     player.init();
-    Scroll::get_instance().init();
+    Scroll::getInstance().init();
 }
 
 // ƒQ[ƒ€XVˆ—
@@ -123,7 +123,7 @@ void Scene_Game::update(int GameTime)
     game_conduct.updateDebug(&game_conduct, &usable);   // debug
     player.update();
     map.update(&player);
-    Scroll::get_instance().update(&player, &map, &game_bg);
+    Scroll::getInstance().update(&player, &map, &game_bg);
 }
 
 // ƒQ[ƒ€•`‰æˆ—

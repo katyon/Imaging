@@ -4,9 +4,11 @@
 #include "Player.h"
 
 // íËêî ----------------------------------------------------
-#define		MAPCHIP_H_MAX	(30)
-#define		MAPCHIP_V_MAX	(17)
-#define		MAPCHIP_SIZE	(64)
+#define		MAPCHIP_H_MAX		(60)
+#define		MAPCHIP_V_MAX		(17)
+#define		SCREEN_CHIP_H_MAX	(30)
+#define		SCREEN_CHIP_V_MAX	(17)
+#define		MAPCHIP_SIZE		(64)
 
 // ÉNÉâÉXêÈåæ ----------------------------------------------
 class MapData : public Sprite
