@@ -4,6 +4,7 @@
 #include "input.h"
 #include "scene_title.h"
 #include "main.h"
+
 // ä÷êî ----------------------------------------------------------------------------------------
 void Title_Bg::init(Title_Bg* title_bg)
 {

@@ -13,7 +13,6 @@ public:
     void update(Title_Bg* title_bg);
     void draw(Title_Bg* title_bg);
     void end(Title_Bg* title_bg);
-
 };
 
 class Title_Conduct

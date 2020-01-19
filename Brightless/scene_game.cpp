@@ -26,6 +26,28 @@ void Game_Bg::end(Game_Bg* game_bg)
     DeleteGraph(game_bg->handle);
 }
 
+void Game_Mask::init(Game_Mask* game_mask)
+{
+    // ƒ}ƒXƒN‰æ–Ê‚Ìì¬
+    CreateMaskScreen();
+    game_mask->handle = MakeMask(GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+}
+
+void Game_Mask::update(Game_Mask* game_mask)
+{
+
+}
+
+void Game_Mask::draw(Game_Mask* game_mask)
+{
+    
+}
+
+void Game_Mask::end(Game_Mask* game_mask)
+{
+    
+}
+
 void Game_Conduct::updateDebug(Game_Conduct* game_conduct, Usable* usable)
 {
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_1)) usable->changeSceneStateInit(Title);

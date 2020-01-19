@@ -13,9 +13,15 @@ public:
     void update(Game_Bg* game_bg);
     void draw(Game_Bg* game_bg);
     void end(Game_Bg* game_bg);
+};
 
-private:
-
+class Game_Mask : public Sprite
+{
+public:
+    void init(Game_Mask* game_mask);
+    void update(Game_Mask* game_mask);
+    void draw(Game_Mask* game_mask);
+    void end(Game_Mask* game_mask);
 };
 
 class Game_Conduct

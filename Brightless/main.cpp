@@ -25,6 +25,7 @@ Choice_Bg       choice_bg;
 Choice_Conduct  choice_conduct;
 Scene_Game      game;
 Game_Bg         game_bg;
+Game_Mask       game_mask;
 Game_Conduct    game_conduct;
 Player          player;
 MapData         map;
