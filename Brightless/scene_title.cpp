@@ -8,7 +8,7 @@
 // ŠÖ” ----------------------------------------------------------------------------------------
 void Title_Bg::init(Title_Bg* title_bg)
 {
-    title_bg->handle = LoadGraph("Data\\Images\\Title_Bg.png");
+    title_bg->handle = LoadGraph("Data\\Images\\Bg\\Title_Bg.png");
 }
 
 void Title_Bg::update(Title_Bg* title_bg)

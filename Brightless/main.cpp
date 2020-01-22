@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "input.h"
+#include "light.h"
 #include "scene_choice.h"
 #include "scene_game.h"
 #include "scene_title.h"
@@ -25,10 +26,11 @@ Choice_Bg       choice_bg;
 Choice_Conduct  choice_conduct;
 Scene_Game      game;
 Game_Bg         game_bg;
-Game_Mask       game_mask;
 Game_Conduct    game_conduct;
 Player          player;
 MapData         map;
+Light           light;
+Mask            mask;
 
 Scene_State     state;
 
@@ -111,35 +113,44 @@ void Scene_Choice::end(void)
 // ƒQ[ƒ€‰Šú‰»ˆ—
 void Scene_Game::init(void)
 {
-    game_bg.init(&game_bg);
+    mask.init();
+    game_bg.init();
     map.init();
     player.init();
+    light.init();
     Scroll::getInstance().init();
 }
 
 // ƒQ[ƒ€XVˆ—
 void Scene_Game::update(int GameTime)
 {
-    game_bg.update(&game_bg);
-    game_conduct.updateDebug(&game_conduct, &usable);   // debug
+    game_bg.update();
+    game_conduct.updateDebug(&usable);   // debug
     player.update();
     map.update(&player);
+    light.update();
     Scroll::getInstance().update(&player, &map, &game_bg);
 }
 
 // ƒQ[ƒ€•`‰æˆ—
 void Scene_Game::draw(int GameTime)
 {
-    game_bg.draw(&game_bg);
+    mask.draw(&light);  // •K‚¸Å‰‚É
+
+    game_bg.draw();
     map.draw();
     player.draw();
     sys.drawDebugString(&player);      // debug
+
+    SetUseMaskScreenFlag(false);
 }
 
 // ƒQ[ƒ€I—¹ˆ—
 void Scene_Game::end(void)
 {
-    game_bg.end(&game_bg);
+    mask.end();
+    game_bg.end();
+    light.end();
 }
 
 //
