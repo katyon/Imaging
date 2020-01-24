@@ -141,16 +141,16 @@ void Scene_Game::draw(int GameTime)
     map.draw();
     player.draw();
     sys.drawDebugString(&player);      // debug
-
     SetUseMaskScreenFlag(false);
+    light.afterDraw();
 }
 
 // ƒQ[ƒ€I—¹ˆ—
 void Scene_Game::end(void)
 {
-    mask.end();
     game_bg.end();
     light.end();
+    mask.end();
 }
 
 //

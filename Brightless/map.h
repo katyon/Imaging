@@ -1,7 +1,8 @@
 #pragma once
 // インクルード ---------------------------------------------
 #include "common.h"
-#include "Player.h"
+#include "light.h"
+#include "player.h"
 
 // 定数 ----------------------------------------------------
 #define		MAPCHIP_H_MAX		(60)
@@ -20,6 +21,7 @@ public:
 
 	float	calRelative();
 	void	collMapChipWithPlayer(Player* obj);
+    void    collMapChipWithLight(Light* light);
 	void	drawMapChip();
 private:
 };

@@ -151,6 +151,18 @@ void MapData::collMapChipWithPlayer(Player* obj)
     }
 }
 
+void MapData::collMapChipWithLight(Light* light)
+{
+    //ƒ`ƒbƒv“–‚½‚è”»’èˆ—
+    for (int Ver = 0; Ver < MAPCHIP_V_MAX; Ver++)
+    {
+        for (int Hor = 0; Hor < MAPCHIP_H_MAX; Hor++)
+        {
+            
+        }
+    }
+}
+
 void MapData::drawMapChip()
 {
     int MAP_MOVE_AMOUNT_X = -(Scroll::getInstance().getScrollAmountX() / 64);
