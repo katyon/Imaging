@@ -8,7 +8,7 @@ void Player::init()
 	flip = 0;
 	onground = 1;
 	isjump = 0;
-	state = None;
+	state = PlayerState::None;
 	handle = LoadGraph("Data\\Images\\Player\\pl_material.png");
 }
 

@@ -215,6 +215,10 @@ void Usable::changeSceneStateInit(Scene_State next_num)
     state = next_num;
 }
 
+int test_handle;
+int mask_handle;
+
+
 // ゲームメインループ
 void Usable::MainLoop(void)
 {
@@ -222,10 +226,19 @@ void Usable::MainLoop(void)
 
     usable.AfterInit();    // ゲーム開始前処理
 
+    //　１.MakeScreenの第三引数にTRUEを指定するとアルファ値を持ったグラフィックハンドルが作成できる
+    test_handle = MakeScreen(1920, 1080, TRUE);
+    //　2.マスク機能の初期化
+    CreateMaskScreen();
+    SetUseMaskScreenFlag(FALSE);
+    //　３.マスクスクリーンに使用するグラフィックハンドルを指定
+    SetMaskScreenGraph(test_handle);
+    //　４.アルファ値の設定されていない部分(透明じゃない部分を描画可能域に設定)
+    //SetMaskReverseEffectFlag(TRUE);
+
     while (ProcessMessage() == 0)		    // ProcessMessageが正常に処理されている間はループ
     {
         ClearDrawScreen();  				// 裏画面を削除
-
         Input::GetInstance()->Updata();     // 入力状態の更新処理
 
         switch (state)
@@ -240,7 +253,22 @@ void Usable::MainLoop(void)
             break;
         case Game:
             game.update(gameTime);          // ゲーム更新処理
+            //　５.描画先をマスク用ハンドルに
+            SetDrawScreen(test_handle);
+            //　６.描画前に画面をクリア
+            ClearDrawScreen();
+            //　７.描画範囲にしする部分を描画（黒色)
+            DrawBox(200, 500, 1000, 1080, GetColor(0, 0, 0), TRUE);
+            //　8.描画先を裏画面に
+            SetDrawScreen(DX_SCREEN_BACK);
+            //　9.マスク用画像を画面からクリア
+            ClearDrawScreen();
+            //　10.マスクを有効に
+            SetUseMaskScreenFlag(TRUE);
+            //　11.ゲーム画面描画
             game.draw(gameTime);            // ゲーム描画処理
+            //　12.マスクの無効化
+            SetUseMaskScreenFlag(FALSE);
             break;
         }
 

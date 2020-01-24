@@ -12,6 +12,7 @@ void Title_Bg::init(Title_Bg* title_bg)
 
 void Title_Bg::update(Title_Bg* title_bg)
 {
+
 }
 
 void Title_Bg::draw(Title_Bg* title_bg)
@@ -30,3 +31,4 @@ void Title_Conduct::updateDebug(Title_Conduct* title_conduct, Usable* usable)
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_2)) usable->changeSceneStateInit(Choice);
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_3)) usable->changeSceneStateInit(Game);
 }
+
