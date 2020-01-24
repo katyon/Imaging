@@ -46,18 +46,27 @@ void Scroll:: autoScroll(Player* player)
 	//プレイヤーが右向きのときのスクロール目標地点設定
 	if (!player->getFlip())
 	{
-		Scroll::getInstance().setScrollDestPos(ABSOLUTE_SCROLL_DESTINATION_L);
+		Scroll::getInstance().setScrollDestPosX(ABSOLUTE_SCROLL_DESTINATION_L);
 	}
 	//プレイヤーが左向きのときのスクロール目標地点設定
 	if (player->getFlip())
 	{
-		Scroll::getInstance().setScrollDestPos(ABSOLUTE_SCROLL_DESTINATION_R);
+		Scroll::getInstance().setScrollDestPosX(ABSOLUTE_SCROLL_DESTINATION_R);
 	}
+	//縦方向のスクロール目標地点設定
+	Scroll::getInstance().setScrollDestPosY(ABSOLUTE_SCROLL_DESTINATION_V);
 
+	////////// 横 //////////
 	//スクロールスピードの設定
-	Scroll::getInstance().setScrollSpeedX(((Scroll::getScrollDestPos() - player->getRelPosX()) / 100) * 3);
+	Scroll::getInstance().setScrollSpeedX(((Scroll::getScrollDestPosX() - player->getRelPosX()) / 100) * 3);
 	//スクロールの実行
 	Scroll::getInstance().setScrollAmountX(Scroll::getInstance().getScrollAmountX() + Scroll::getInstance().getScrollSpeedX());
+
+	////////// 縦 //////////
+	//スクロールスピードの設定
+	Scroll::getInstance().setScrollSpeedY(((Scroll::getScrollDestPosY() - player->getRelPosY()) / 80) * 2);
+	//スクロールの実行
+	Scroll::getInstance().setScrollAmountY(Scroll::getInstance().getScrollAmountY() + Scroll::getInstance().getScrollSpeedY());
 
 	//スクロール限界地点の補正処理
 	//画面左端
@@ -69,5 +78,15 @@ void Scroll:: autoScroll(Player* player)
 	if (Scroll::getInstance().getScrollAmountX() < (-(MAPCHIP_H_MAX- SCREEN_CHIP_H_MAX)*MAPCHIP_SIZE) )
 	{
 		Scroll::getInstance().setScrollAmountX(-(MAPCHIP_H_MAX - SCREEN_CHIP_H_MAX) * MAPCHIP_SIZE);
+	}
+	//画面上端
+	if (Scroll::getInstance().getScrollAmountY() > 0)
+	{
+		Scroll::getInstance().setScrollAmountY(0);
+	}
+	//画面下端
+	if (Scroll::getInstance().getScrollAmountY() < (-(MAPCHIP_V_MAX - SCREEN_CHIP_V_MAX) * MAPCHIP_SIZE))
+	{
+		Scroll::getInstance().setScrollAmountY(-(MAPCHIP_V_MAX - SCREEN_CHIP_V_MAX) * MAPCHIP_SIZE);
 	}
 }

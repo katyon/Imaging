@@ -6,6 +6,7 @@
 
 #define	ABSOLUTE_SCROLL_DESTINATION_L		(400)
 #define	ABSOLUTE_SCROLL_DESTINATION_R		(SCREEN_WIDTH - 400)
+#define ABSOLUTE_SCROLL_DESTINATION_V		(660)
 
 class Scroll
 {
@@ -37,8 +38,10 @@ public:
 	void setScrollSpeedX(float s) { scroll_speed_x = s; }
 	void setScrollSpeedY(float s) { scroll_speed_y = s; }
 
-	float getScrollDestPos() { return scroll_dest_pos; }
-	void setScrollDestPos(float d) { scroll_dest_pos = d; }
+	float getScrollDestPosX() { return scroll_dest_posX; }
+	void setScrollDestPosX(float d) { scroll_dest_posX = d; }
+	float getScrollDestPosY() { return scroll_dest_posY; }
+	void setScrollDestPosY(float d) { scroll_dest_posY = d; }
 
 	void autoScroll(Player* player);
 
@@ -53,5 +56,6 @@ private:
 	float scroll_speed_x;
 	float scroll_speed_y;
 
-	float scroll_dest_pos;
+	float scroll_dest_posX;
+	float scroll_dest_posY;
 };

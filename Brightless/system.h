@@ -18,3 +18,6 @@ public:
 private:
     unsigned int cr = 0;
 };
+
+
+bool judgeCollPointAndLine(float line_start_x, float line_start_y, float line_end_x, float line_end_y, float point_x, float point_y);
