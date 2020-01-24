@@ -5,50 +5,28 @@
 #include "scene_game.h"
 
 // ŠÖ” ----------------------------------------------------------------------------------------
-void Game_Bg::init(Game_Bg* game_bg)
+void Game_Bg::init()
 {
-    game_bg->posX = game_bg->posY = game_bg->rel_posX = game_bg->rel_posY = 0;
-    game_bg->handle = LoadGraph("Data\\Images\\Game_Bg.png");
+    posX = posY = rel_posX = rel_posY = 0;
+    handle = LoadGraph("Data\\Images\\Bg\\Game_Bg.png");
 }
 
-void Game_Bg::update(Game_Bg* game_bg)
-{
-
-}
-
-void Game_Bg::draw(Game_Bg* game_bg)
-{
-    DrawGraphF(game_bg->posX, game_bg->posY, game_bg->handle, true);
-}
-
-void Game_Bg::end(Game_Bg* game_bg)
-{
-    DeleteGraph(game_bg->handle);
-}
-
-void Game_Mask::init(Game_Mask* game_mask)
-{
-    // ƒ}ƒXƒN‰æ–Ê‚Ìì¬
-    CreateMaskScreen();
-    game_mask->handle = MakeMask(GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
-}
-
-void Game_Mask::update(Game_Mask* game_mask)
+void Game_Bg::update()
 {
 
 }
 
-void Game_Mask::draw(Game_Mask* game_mask)
+void Game_Bg::draw()
 {
-    
+    DrawGraphF(posX, posY, handle, true);
 }
 
-void Game_Mask::end(Game_Mask* game_mask)
+void Game_Bg::end()
 {
-    
+    DeleteGraph(handle);
 }
 
-void Game_Conduct::updateDebug(Game_Conduct* game_conduct, Usable* usable)
+void Game_Conduct::updateDebug(Usable* usable)
 {
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_1)) usable->changeSceneStateInit(Title);
     if (Input::GetInstance()->GetKeyDown(KEY_INPUT_2)) usable->changeSceneStateInit(Choice);

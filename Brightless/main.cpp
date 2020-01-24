@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "input.h"
+#include "light.h"
 #include "scene_choice.h"
 #include "scene_game.h"
 #include "scene_title.h"
@@ -25,10 +26,11 @@ Choice_Bg       choice_bg;
 Choice_Conduct  choice_conduct;
 Scene_Game      game;
 Game_Bg         game_bg;
-Game_Mask       game_mask;
 Game_Conduct    game_conduct;
 Player          player;
 MapData         map;
+Light           light;
+Mask            mask;
 
 Scene_State     state;
 
@@ -111,35 +113,44 @@ void Scene_Choice::end(void)
 // ゲーム初期化処理
 void Scene_Game::init(void)
 {
-    game_bg.init(&game_bg);
+    mask.init();
+    game_bg.init();
     map.init();
     player.init();
+    light.init();
     Scroll::getInstance().init();
 }
 
 // ゲーム更新処理
 void Scene_Game::update(int GameTime)
 {
-    game_bg.update(&game_bg);
-    game_conduct.updateDebug(&game_conduct, &usable);   // debug
+    game_bg.update();
+    game_conduct.updateDebug(&usable);   // debug
     player.update();
     map.update(&player);
+    light.update();
     Scroll::getInstance().update(&player, &map, &game_bg);
 }
 
 // ゲーム描画処理
 void Scene_Game::draw(int GameTime)
 {
-    game_bg.draw(&game_bg);
+    mask.draw(&light);  // 必ず最初に
+
+    game_bg.draw();
     map.draw();
     player.draw();
     sys.drawDebugString(&player);      // debug
+    SetUseMaskScreenFlag(false);
+    light.afterDraw();
 }
 
 // ゲーム終了処理
 void Scene_Game::end(void)
 {
-    game_bg.end(&game_bg);
+    game_bg.end();
+    light.end();
+    mask.end();
 }
 
 //
@@ -227,16 +238,6 @@ void Usable::MainLoop(void)
 
     usable.AfterInit();    // ゲーム開始前処理
 
-    //　１.MakeScreenの第三引数にTRUEを指定するとアルファ値を持ったグラフィックハンドルが作成できる
-    test_handle = MakeScreen(1920, 1080, TRUE);
-    //　2.マスク機能の初期化
-    CreateMaskScreen();
-    SetUseMaskScreenFlag(FALSE);
-    //　３.マスクスクリーンに使用するグラフィックハンドルを指定
-    SetMaskScreenGraph(test_handle);
-    //　４.アルファ値の設定されていない部分(透明じゃない部分を描画可能域に設定)
-    //SetMaskReverseEffectFlag(TRUE);
-
     while (ProcessMessage() == 0)		    // ProcessMessageが正常に処理されている間はループ
     {
         ClearDrawScreen();  				// 裏画面を削除
@@ -254,22 +255,7 @@ void Usable::MainLoop(void)
             break;
         case Game:
             game.update(gameTime);          // ゲーム更新処理
-            //　５.描画先をマスク用ハンドルに
-            SetDrawScreen(test_handle);
-            //　６.描画前に画面をクリア
-            ClearDrawScreen();
-            //　７.描画範囲にしする部分を描画（黒色)
-            DrawBox(200, 500, 1000, 1080, GetColor(0, 0, 0), TRUE);
-            //　8.描画先を裏画面に
-            SetDrawScreen(DX_SCREEN_BACK);
-            //　9.マスク用画像を画面からクリア
-            ClearDrawScreen();
-            //　10.マスクを有効に
-            SetUseMaskScreenFlag(TRUE);
-            //　11.ゲーム画面描画
             game.draw(gameTime);            // ゲーム描画処理
-            //　12.マスクの無効化
-            SetUseMaskScreenFlag(FALSE);
             break;
         }
 

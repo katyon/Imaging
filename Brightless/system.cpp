@@ -1,11 +1,10 @@
 // インクルード -------------------------------------------------------------------------------------
 #include "DxLib.h"
-
 #include <math.h>
 
-#include "system.h"
 #include "relative_position.h"
 #include "input.h"
+#include "system.h"
 
 // 関数 ----------------------------------------------------------------------------------------
 // デバック文字を描画
@@ -13,7 +12,6 @@ void System::drawDebugString(Player* player)
 {
     SetFontSize(25);
     cr = GetColor(0, 200, 200);
-
 
     DrawFormatString(0, 0, cr, "Title:1");
     DrawFormatString(0, 20, cr, "Choice:2");

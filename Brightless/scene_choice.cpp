@@ -7,7 +7,7 @@
 // ŠÖ” ----------------------------------------------------------------------------------------
 void Choice_Bg::init(Choice_Bg* choice_bg)
 {
-    choice_bg->handle = LoadGraph("Data\\Images\\Choice_Bg.png");
+    choice_bg->handle = LoadGraph("Data\\Images\\Bg\\Choice_Bg.png");
 }
 
 void Choice_Bg::update(Choice_Bg* choice_bg)

@@ -2,6 +2,7 @@
 
 // インクルード ---------------------------------------------------------
 #include "common.h"
+#include "light.h"
 #include "main.h"
 #include "player.h"
 

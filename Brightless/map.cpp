@@ -44,18 +44,18 @@ static int test_map[MAPCHIP_V_MAX][MAPCHIP_H_MAX]
 
 void MapData::init()
 {
-	posX = posY = rel_posX = rel_posY =0;
-	handle = LoadGraph("Data\\Images\\Map\\map_chip.png");
+    posX = posY = rel_posX = rel_posY = 0;
+    handle = LoadGraph("Data\\Images\\Map\\map_chip.png");
 }
 
 void MapData::update(Player* obj)
 {
-	MapData::collMapChipWithPlayer(obj);
+    MapData::collMapChipWithPlayer(obj);
 }
 
 void MapData::draw()
 {
-	MapData::drawMapChip();
+    MapData::drawMapChip();
 }
 
 
@@ -169,23 +169,31 @@ void MapData::collMapChipWithPlayer(Player* obj)
 	}
 }
 
+void MapData::collMapChipWithLight(Light* light)
+{
+    //É`ÉbÉvìñÇΩÇËîªíËèàóù
+    for (int Ver = 0; Ver < MAPCHIP_V_MAX; Ver++)
+    {
+        for (int Hor = 0; Hor < MAPCHIP_H_MAX; Hor++)
+        {
+            
+        }
+    }
+}
+
 void MapData::drawMapChip()
 {
-	int MAP_MOVE_AMOUNT_X = -(Scroll::getInstance().getScrollAmountX() / 64);
-	//xé≤ï˚å¸ï`âÊêßå¿
-	if (MAP_MOVE_AMOUNT_X < 0) { MAP_MOVE_AMOUNT_X = 0; }
-	if ((MAP_MOVE_AMOUNT_X + SCREEN_CHIP_H_MAX) >= MAPCHIP_H_MAX) { MAP_MOVE_AMOUNT_X = MAPCHIP_H_MAX - SCREEN_CHIP_H_MAX-1; }
+    int MAP_MOVE_AMOUNT_X = -(Scroll::getInstance().getScrollAmountX() / 64);
+    if (MAP_MOVE_AMOUNT_X < 0) { MAP_MOVE_AMOUNT_X = 0; }
+    if ((MAP_MOVE_AMOUNT_X + SCREEN_CHIP_H_MAX) >= MAPCHIP_H_MAX) { MAP_MOVE_AMOUNT_X = MAPCHIP_H_MAX - SCREEN_CHIP_H_MAX - 1; }
 
-	int MAP_MOVE_AMOUNT_Y = -(Scroll::getInstance().getScrollAmountY() / 64);
-	//yé≤ï˚å¸ï`âÊêßå¿
-	if (MAP_MOVE_AMOUNT_Y < 0) { MAP_MOVE_AMOUNT_Y = 0; }
-	if ((MAP_MOVE_AMOUNT_Y + SCREEN_CHIP_V_MAX) >= MAPCHIP_V_MAX) { MAP_MOVE_AMOUNT_Y = MAPCHIP_V_MAX - SCREEN_CHIP_V_MAX - 1; }
+    int MAP_MOVE_AMOUNT_Y = -(Scroll::getInstance().getScrollAmountY() / 64);
 
-	for (int Ver = 0 + MAP_MOVE_AMOUNT_Y; Ver < SCREEN_CHIP_V_MAX + MAP_MOVE_AMOUNT_Y + 1; Ver++)
-	{
-		for (int Hor = 0 + MAP_MOVE_AMOUNT_X; Hor < SCREEN_CHIP_H_MAX + MAP_MOVE_AMOUNT_X + 1; Hor++)
-		{
-			DrawRectGraph(rel_posX + (Hor * MAPCHIP_SIZE), rel_posY + (Ver * MAPCHIP_SIZE), (test_map[Ver][Hor] * MAPCHIP_SIZE), 0, MAPCHIP_SIZE, MAPCHIP_SIZE, handle, TRUE);
-		}
-	}
+    for (int Ver = 0 + MAP_MOVE_AMOUNT_Y; Ver < SCREEN_CHIP_V_MAX + MAP_MOVE_AMOUNT_Y + 1; Ver++)
+    {
+        for (int Hor = 0 + MAP_MOVE_AMOUNT_X; Hor < SCREEN_CHIP_H_MAX + MAP_MOVE_AMOUNT_X + 1; Hor++)
+        {
+            DrawRectGraphF(rel_posX + (Hor * MAPCHIP_SIZE), rel_posY + (Ver * MAPCHIP_SIZE), (test_map[Ver][Hor] * MAPCHIP_SIZE), 0, MAPCHIP_SIZE, MAPCHIP_SIZE, handle, TRUE);
+        }
+    }
 }
