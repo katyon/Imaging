@@ -59,7 +59,7 @@ void Scene_Title::update(int GameTime)
 void Scene_Title::draw(int GameTime)
 {
     title_bg.draw(&title_bg);
-    sys.drawDebugString(&player);      // debug
+    sys.drawDebugString(&light, &player);      // debug
 }
 
 // タイトル終了処理
@@ -93,7 +93,7 @@ void Scene_Choice::update(int GameTime)
 void Scene_Choice::draw(int GameTime)
 {
     choice_bg.draw(&choice_bg);
-    sys.drawDebugString(&player);              // debug
+    sys.drawDebugString(&light, &player);              // debug
 }
 
 // ステージ選択終了処理
@@ -140,7 +140,7 @@ void Scene_Game::draw(int GameTime)
     game_bg.draw();
     map.draw();
     player.draw();
-    sys.drawDebugString(&player);      // debug
+    sys.drawDebugString(&light, &player);      // debug
     SetUseMaskScreenFlag(false);
     light.afterDraw();
 }

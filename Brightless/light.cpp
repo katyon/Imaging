@@ -7,31 +7,29 @@
 #include "light.h"
 #include "map.h"
 #include "relative_position.h"
+#include "system.h"
+#include "vec2.h"
 
 // 関数 ----------------------------------------------------------------------------------------
 void Light::init()
 {
-    black = GetColor(0, 0, 0);
-    posX = 0;
-    posY = 200;
+    posA.set(0, 200);
     width = 6000;
     height = 200;
     angle = 0;
     handle = LoadGraph("Data\\Images\\Light\\light.png");
     col_over = Not;
-    vec.set(0, 200);
 }
 
 void Light::update()
 {
     collisionManager();
-    formManager();
     angleManager();
 }
 
 void Light::beforeDraw()
 {
-    DrawRectRotaGraph2F(posX+getScrollAmountX(), posY+getScrollAmountY(), 0, 0, width, height, 0, height / 2, 1.0, angle * PI / 180, handle, true, false, false);
+    DrawRectRotaGraph2F(posA.x + getScrollAmountX(), posA.y + getScrollAmountY(), 0, 0, width, height, 0, height / 2, 1.0, angle * PI / 180, handle, true, false, false);
 }
 
 void Light::afterDraw()
@@ -47,24 +45,19 @@ void Light::end()
 void Light::angleManager()
 {
     // キーボード
-    if (Input::GetInstance()->GetKey(KEY_INPUT_F)) posX -= LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_H)) posX += LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_T)) posY -= LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_G)) posY += LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetKey(KEY_INPUT_F)) posA.x -= LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetKey(KEY_INPUT_H)) posA.x += LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetKey(KEY_INPUT_T)) posA.y -= LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetKey(KEY_INPUT_G)) posA.y += LIGHT_MOVE_SPEED;
     if (Input::GetInstance()->GetKey(KEY_INPUT_Z)) angle -= LIGHT_ANGLE_SPEED;
     if (Input::GetInstance()->GetKey(KEY_INPUT_X)) angle += LIGHT_ANGLE_SPEED;
     // 箱コン
-    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Left))    posX -= LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Right))   posX += LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Up))      posY -= LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Down))    posY += LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Left))    posA.x -= LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Right))   posA.x += LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Up))      posA.y -= LIGHT_MOVE_SPEED;
+    if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Down))    posA.y += LIGHT_MOVE_SPEED;
     if (Input::GetInstance()->GetButton(PL_1, XINPUT_BUTTON_LEFT_SHOULDER))     angle -= LIGHT_ANGLE_SPEED;
     if (Input::GetInstance()->GetButton(PL_1, XINPUT_BUTTON_RIGHT_SHOULDER))    angle += LIGHT_ANGLE_SPEED;
-}
-
-void Light::formManager()
-{
-
 }
 
 void Light::collisionManager()
@@ -72,7 +65,7 @@ void Light::collisionManager()
     switch (col_over)
     {
     case Not:
-        
+
         break;
     case Wall:
 
@@ -84,21 +77,9 @@ void Light::collisionManager()
     }
 }
 
-void Light::calculateAngle(float x1, float y1, float x2, float y2)
+void Light::calculateAngle(vec2<float> a, vec2<float> b)
 {
 
-}
-
-void Light::drawFreeFillBlackSquareF(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
-{
-    DrawTriangle(x1, y1, x2, y2, x3, y3, black, true);
-    DrawTriangle(x1, y1, x4, y4, x3, y3, black, true);
-}
-
-void Light::drawFreeFillBlackSquareFVec2(vec2<float> vec, float x2, float y2, float x3, float y3, float x4, float y4)
-{
-    DrawTriangle(vec.x,vec.y, x2, y2, x3, y3, black, true);
-    DrawTriangle(vec.x, vec.y, x4, y4, x3, y3, black, true);
 }
 
 float Light::getScrollAmountX()
