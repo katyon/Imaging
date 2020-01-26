@@ -115,8 +115,8 @@ void Scene_Game::init(void)
 {
     mask.init();
     game_bg.init();
-    map.init();
     player.init();
+    map.init(&player);
     light.init();
     Scroll::getInstance().init();
 }
@@ -127,6 +127,8 @@ void Scene_Game::update(int GameTime)
     game_bg.update();
     game_conduct.updateDebug(&usable);   // debug
     player.update();
+    judgeIntersection(player.getPosX()+(PLAYER_WIDTH/2), player.getPosY()+PLAYER_HEIGHT, player.getPosX()+(PLAYER_WIDTH / 2)+player.getSpeedX(), player.getPosY()+PLAYER_HEIGHT+player.getSpeedY(), 400, 400, 1600, 1900,&player);
+    judgeIntersection(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, player.getPosX() + (PLAYER_WIDTH / 2) + player.getSpeedX(), player.getPosY() + PLAYER_HEIGHT + player.getSpeedY(), 400-1200, 1900, 1600-1200, 400, &player);
     map.update(&player);
     light.update();
     Scroll::getInstance().update(&player, &map, &game_bg);
@@ -140,9 +142,12 @@ void Scene_Game::draw(int GameTime)
     game_bg.draw();
     map.draw();
     player.draw();
+    map.drawElevatorDoor();
     sys.drawDebugString(&player);      // debug
     SetUseMaskScreenFlag(false);
     light.afterDraw();
+    DrawLine(400+Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), 1600 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
+    DrawLine(400-1200 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), 1600-1200 + Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
 }
 
 // ÉQÅ[ÉÄèIóπèàóù

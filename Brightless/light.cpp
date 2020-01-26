@@ -126,7 +126,7 @@ void Mask::draw(Light* light)
     light->beforeDraw();
     SetDrawScreen(DX_SCREEN_BACK);
     ClearDrawScreen();
-    SetUseMaskScreenFlag(true);
+    SetUseMaskScreenFlag(false);
 }
 
 void Mask::end()

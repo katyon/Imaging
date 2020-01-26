@@ -4,13 +4,13 @@
 #include "common.h"
 
 // 定数 ----------------------------------------------------
-#define PLAYER_WIDTH		(100)
-#define PLAYER_HEIGHT		(200)	
+#define PLAYER_WIDTH		(100.0f)
+#define PLAYER_HEIGHT		(200.0f)
 
-#define PLAYER_SPEED		(10)
-#define PLAYER_SPEED_MAX	(20)
-#define JUMP_POW			(-20)
-#define GRAVITY				(0.7)
+#define PLAYER_SPEED		(10.0f)
+#define PLAYER_SPEED_MAX	(20.0f)
+#define JUMP_POW			(-20.0f)
+#define GRAVITY				(0.7f)
 
 // クラス宣言 ----------------------------------------------
 
@@ -18,6 +18,17 @@ enum PlayerState { None, Walk };
 
 class Player : public Sprite
 {
+private:
+	float		speedX, speedY;
+	bool		flip;
+	bool		onground;
+	bool		isjump;
+	PlayerState state;
+
+	float		correctX, correctY;
+	bool		movement_pass;
+	float		move_angle;
+
 public:
 	void		init();
 	void		update();
@@ -27,26 +38,33 @@ public:
 	void		movePlayer();
 	void		affectGravity();
 
-	float		getPosX();
-	float		getPosY();
-	void		setPosX(float x);
-	void		setPosY(float y);
+	float		getPosX() { return posX; }
+	float		getPosY() { return posY; }
+	void		setPosX(float x) { posX = x; }
+	void		setPosY(float y) { posY = y; }
 
-	float		getSpeedX();
-	float		getSpeedY();
-	void		setSpeedX(float x);
-	void		setSpeedY(float y);
+	float		getSpeedX() { return speedX; }
+	float		getSpeedY() { return speedY; }
+	void		setSpeedX(float x) { speedX = x; }
+	void		setSpeedY(float y) { speedY = y; }
+
+	float		getCorrectX() { return correctX; }
+	float		getCorrectY() { return correctY; }
+	void		setCorrectX(float x) { correctX = x; }
+	void		setCorrectY(float y) { correctY = y; }
+
+	bool		getMovementPass() { return movement_pass; }
+	void		setMovementPass(bool m) { movement_pass = m; }
+
+	float		getMoveAngle() { return move_angle; }
+	void		setMoveAngle(float a) { move_angle = a; }
+
 
 	bool		getFlip() { return flip; }
 
-	void		setOnGround(bool g);
+	bool		getOnGround() { return onground; }
+	void		setOnGround(bool g) { onground = g; };
 
-private:
-	float		speedX, speedY;
-	bool		flip;
-	bool		onground;
-	bool		isjump;
-	PlayerState state;
 };
 
 // プロトタイプ宣言 -----------------------------------------
