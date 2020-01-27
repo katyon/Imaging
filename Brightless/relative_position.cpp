@@ -56,7 +56,7 @@ void Scroll:: autoScroll(Player* player)
 		Scroll::getInstance().setScrollDestPosX(ABSOLUTE_SCROLL_DESTINATION_R);
 	}
 	//縦方向のスクロール目標地点設定
-	if (Input::GetInstance()->GetKey(KEY_INPUT_DOWN) || Input::GetInstance()->GetRightThumb(PL_1,Roughly_Down))
+	if (Input::GetInstance()->GetKey(KEY_INPUT_LSHIFT) || Input::GetInstance()->GetButton(PL_1,XINPUT_BUTTON_DPAD_DOWN))
 	{
 		Scroll::getInstance().setScrollDestPosY(ABSOLUTE_SCROLL_DESTINATION_V - 800);
 	}

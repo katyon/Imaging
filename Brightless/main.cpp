@@ -46,26 +46,26 @@ Scene_State     state;
 // タイトル初期化処理
 void Scene_Title::init(void)
 {
-    title_bg.init(&title_bg);
+	title_bg.init(&title_bg);
 }
 
 // タイトル更新処理
 void Scene_Title::update(int GameTime)
 {
-    title_bg.update(&title_bg,&usable);
-    title_conduct.updateDebug(&title_conduct, &usable);     // debug
+	title_bg.update(&title_bg, &usable);
+	title_conduct.updateDebug(&title_conduct, &usable);     // debug
 }
 
 // タイトル描画処理
 void Scene_Title::draw(int GameTime)
 {
-    title_bg.draw(&title_bg);
+	title_bg.draw(&title_bg);
 }
 
 // タイトル終了処理
 void Scene_Title::end(void)
 {
-    title_bg.end(&title_bg);
+	title_bg.end(&title_bg);
 }
 
 //
@@ -79,26 +79,26 @@ void Scene_Title::end(void)
 // ステージ選択初期化処理
 void Scene_Choice::init(void)
 {
-    choice_bg.init(&choice_bg);
+	choice_bg.init(&choice_bg);
 }
 
 // ステージ選択更新処理
 void Scene_Choice::update(int GameTime)
 {
-    choice_bg.update(&choice_bg);
-    choice_conduct.updateDebug(&choice_conduct, &usable);   // debug
+	choice_bg.update(&choice_bg, &usable);
+	choice_conduct.updateDebug(&choice_conduct, &usable);   // debug
 }
 
 // ステージ選択描画処理
 void Scene_Choice::draw(int GameTime)
 {
-    choice_bg.draw(&choice_bg);
+	choice_bg.draw(&choice_bg);
 }
 
 // ステージ選択終了処理
 void Scene_Choice::end(void)
 {
-    choice_bg.end(&choice_bg);
+	choice_bg.end(&choice_bg);
 }
 
 //
@@ -112,62 +112,65 @@ void Scene_Choice::end(void)
 // ゲーム初期化処理
 void Scene_Game::init(void)
 {
-    mask.init();
-    game_bg.init();
-    game_flag.init();
-    player.init();
-    map.init(&player);
-    light.init();
-    Scroll::getInstance().init();
+	mask.init();
+	game_bg.init();
+	game_flag.init();
+	player.init();
+	map.init(&player);
+	light.init();
+	Scroll::getInstance().init();
 }
 
 // ゲーム更新処理
 void Scene_Game::update(int GameTime)
 {
-    game_bg.update();
-    game_conduct.updateDebug(&usable);   // debug
-    game_flag.update(&usable);
-    player.update(&game_flag);
-    //if (!judgeCollPointAndLine(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, 400, 400, 1600, 1900, &player) &&
-    //    !judgeCollPointAndLine(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, 400 - 1200, 1900, 1600 - 1200, 400, &player))
-    //{
-    //    player.setMovementPass(true);
-    //}
-    judgeIntersection(player.getPosX()+(PLAYER_WIDTH/2), player.getPosY() + PLAYER_HEIGHT, player.getPosX()+(PLAYER_WIDTH / 2)+player.getSpeedX(), player.getPosY()+PLAYER_HEIGHT+player.getSpeedY(), 400, 400, 1600, 1900,&player);
-    judgeIntersection(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, player.getPosX() + (PLAYER_WIDTH / 2) + player.getSpeedX(), player.getPosY() + PLAYER_HEIGHT + player.getSpeedY(), 400-1200, 1900, 1600-1200, 400, &player);
-    if (!judgeIntersectionY(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT-1, player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT + 2, 400, 400, 1600, 1900, &player) &&
-        !judgeIntersectionY(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT-1, player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT + 2, 400 - 1200, 1900, 1600 - 1200, 400, &player))
-    {
-        player.setMovementPass(true);
-    }
-    map.update(&player, &game_flag);
-    light.update();
-    Scroll::getInstance().update(&player, &map, &game_bg);
+	game_bg.update();
+	game_conduct.updateDebug(&usable);   // debug
+	game_flag.update(&usable);
+	player.update(&game_flag);
+	//if (!judgeCollPointAndLine(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, 400, 400, 1600, 1900, &player) &&
+	//    !judgeCollPointAndLine(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, 400 - 1200, 1900, 1600 - 1200, 400, &player))
+	//{
+	//    player.setMovementPass(true);
+	//}
+	judgeIntersection(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, player.getPosX() + (PLAYER_WIDTH / 2) + player.getSpeedX(), player.getPosY() + PLAYER_HEIGHT + player.getSpeedY(), 400, 400, 1600, 1900, &player);
+	judgeIntersection(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, player.getPosX() + (PLAYER_WIDTH / 2) + player.getSpeedX(), player.getPosY() + PLAYER_HEIGHT + player.getSpeedY(), 400 - 1200, 1900, 1600 - 1200, 400, &player);
+	judgeIntersection(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, player.getPosX() + (PLAYER_WIDTH / 2) + player.getSpeedX(), player.getPosY() + PLAYER_HEIGHT + player.getSpeedY(), 2800, 100, 2200, 1400, &player);
+	if (!judgeIntersectionY(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT - 1, player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT + 2, 400, 400, 1600, 1900, &player) &&
+		!judgeIntersectionY(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT - 1, player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT + 2, 400 - 1200, 1900, 1600 - 1200, 400, &player) &&
+		!judgeIntersectionY(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT - 1, player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT + 2, 2800, 100, 2200, 1400, &player))
+	{
+		player.setMovementPass(true);
+	}
+	map.update(&player, &game_flag);
+	light.update();
+	Scroll::getInstance().update(&player, &map, &game_bg);
 }
 
 // ゲーム描画処理
 void Scene_Game::draw(int GameTime)
 {
-    mask.draw(&light);  // 必ず最初に
+	mask.draw(&light);  // 必ず最初に
 
-    game_bg.draw();
-    map.draw(&game_flag);
-    player.draw();
-    map.drawElevatorDoor(&game_flag);
-    DrawLine(400+Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), 1600 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
-    DrawLine(400-1200 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), 1600-1200 + Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
-    SetUseMaskScreenFlag(FALSE);
-    SetUseMaskScreenFlag(false);
-    light.afterDraw();
+	game_bg.draw();
+	map.draw(&game_flag);
+	player.draw();
+	map.drawElevatorDoor(&game_flag);
+	DrawLine(400 + Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), 1600 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
+	DrawLine(400 - 1200 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), 1600 - 1200 + Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
+	DrawLine(2800 + Scroll::getInstance().getScrollAmountX(), 100 + Scroll::getInstance().getScrollAmountY(), 2200 + Scroll::getInstance().getScrollAmountX(), 1400 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
+	SetUseMaskScreenFlag(FALSE);
+	SetUseMaskScreenFlag(false);
+	light.afterDraw();
 }
 
 // ゲーム終了処理
 void Scene_Game::end(void)
 {
-    game_bg.end();
-    game_flag.end();
-    light.end();
-    mask.end();
+	game_bg.end();
+	game_flag.end();
+	light.end();
+	mask.end();
 }
 
 //
@@ -177,71 +180,71 @@ void Scene_Game::end(void)
 // DirectX初期化前処理
 void Usable::BeforeInit(void)
 {
-    //int mbResult;
-    int win_mode = TRUE;
-    //
-    //// フルスクリーンにするか選択する
-    //mbResult = MessageBox(NULL, STR_MSG_ASKFS, STR_MSGTTL_ASKFS, MB_YESNO);
-    //if (mbResult == IDYES) win_mode = FALSE;
-    ChangeWindowMode(win_mode);
-    // ウィンドウタイトルを設定する
-    SetMainWindowText(STR_WINTTL);
+	//int mbResult;
+	int win_mode = TRUE;
+	//
+	//// フルスクリーンにするか選択する
+	//mbResult = MessageBox(NULL, STR_MSG_ASKFS, STR_MSGTTL_ASKFS, MB_YESNO);
+	//if (mbResult == IDYES) win_mode = FALSE;
+	ChangeWindowMode(win_mode);
+	// ウィンドウタイトルを設定する
+	SetMainWindowText(STR_WINTTL);
 }
 
 // ゲーム開始前処理
 void Usable::AfterInit(void)
 {
-    // InputClass
-    Input::Create();
-    Input::GetInstance()->Init();
+	// InputClass
+	Input::Create();
+	Input::GetInstance()->Init();
 
-    state = Title;
-    title.init();
+	state = Title;
+	title.init();
 }
 
 // ゲーム終了後処理
 void Usable::End(void)
 {
-    // InputClassの終了処理
-    Input::Destroy();
-    // 全グラフィックの削除
-    DxLib::InitGraph();
-    // 全音データの削除
-    InitSoundMem();
+	// InputClassの終了処理
+	Input::Destroy();
+	// 全グラフィックの削除
+	DxLib::InitGraph();
+	// 全音データの削除
+	InitSoundMem();
 }
 
 // シーン遷移処理
 void Usable::changeSceneStateInit(Scene_State next_num)
 {
-    // 現在のシーンの終了処理
-    switch (state)
-    {
-    case Title:
-        title.end();
-        break;
-    case Choice:
-        choice.end();
-        break;
-    case Game:
-        game.end();
-        break;
-    }
+	// 現在のシーンの終了処理
+	switch (state)
+	{
+	case Title:
+		title.end();
+		break;
+	case Choice:
+		choice.end();
+		break;
+	case Game:
+		game.end();
+		break;
+	}
 
-    // シーン遷移時に初期化
-    switch (next_num)
-    {
-    case Title:
-        title.init();
-        break;
-    case Choice:
-        choice.init();
-        break;
-    case Game:
-        game.init();
-        break;
-    }
+	// シーン遷移時に初期化
+	switch (next_num)
+	{
+	case Title:
+		title.init();
+		break;
+	case Choice:
+		choice.init();
+		break;
+	case Game:
+		game.init();
+		break;
+	}
 
-    state = next_num;
+	state = next_num;
 }
 
 int test_handle;
@@ -251,53 +254,53 @@ int mask_handle;
 // ゲームメインループ
 void Usable::MainLoop(void)
 {
-    unsigned int gameTime = 0;			// グローバルゲームカウンタ
+	unsigned int gameTime = 0;			// グローバルゲームカウンタ
 
-    usable.AfterInit();    // ゲーム開始前処理
+	usable.AfterInit();    // ゲーム開始前処理
 
-    while (ProcessMessage() == 0)		    // ProcessMessageが正常に処理されている間はループ
-    {
-        ClearDrawScreen();  				// 裏画面を削除
-        Input::GetInstance()->Updata();     // 入力状態の更新処理
+	while (ProcessMessage() == 0)		    // ProcessMessageが正常に処理されている間はループ
+	{
+		ClearDrawScreen();  				// 裏画面を削除
+		Input::GetInstance()->Updata();     // 入力状態の更新処理
 
-        switch (state)
-        {
-        case Title:
-            title.update(gameTime);         // タイトル更新処理
-            title.draw(gameTime);           // タイトル描画処理
-            break;
-        case Choice:
-            choice.update(gameTime);        // ステージ選択更新処理
-            choice.draw(gameTime);          // ステージ選択描画処理
-            break;
-        case Game:
-            game.update(gameTime);          // ゲーム更新処理
-            game.draw(gameTime);            // ゲーム描画処理
-            break;
-        }
-        sys.drawDebugString(&light, &player);      // debug
-        ScreenFlip();   // VSYNCを待つ
+		switch (state)
+		{
+		case Title:
+			title.update(gameTime);         // タイトル更新処理
+			title.draw(gameTime);           // タイトル描画処理
+			break;
+		case Choice:
+			choice.update(gameTime);        // ステージ選択更新処理
+			choice.draw(gameTime);          // ステージ選択描画処理
+			break;
+		case Game:
+			game.update(gameTime);          // ゲーム更新処理
+			game.draw(gameTime);            // ゲーム描画処理
+			break;
+		}
+		//sys.drawDebugString(&light, &player);      // debug
+		ScreenFlip();   // VSYNCを待つ
 
-        // ESCキーだけは常に監視。押されたら直ちに終了
-        int stick = CheckHitKey(KEY_INPUT_ESCAPE);
-        if (stick == 1) break;
-        gameTime++;						// ゲームカウンタを進める
-    }
+		// ESCキーだけは常に監視。押されたら直ちに終了
+		int stick = CheckHitKey(KEY_INPUT_ESCAPE);
+		if (stick == 1) break;
+		gameTime++;						// ゲームカウンタを進める
+	}
 }
 
 // WinMain関数
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-    LPSTR lpCmdLine, int nCmdShow)
+	LPSTR lpCmdLine, int nCmdShow)
 {
-    usable.BeforeInit();                // DirectX初期化前処理
-    if (DxLib_Init() == -1) return -1;  // エラーが起きたら直ちに終了
+	usable.BeforeInit();                // DirectX初期化前処理
+	if (DxLib_Init() == -1) return -1;  // エラーが起きたら直ちに終了
 
-    SetGraphMode(GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT, 32);
-    SetDrawScreen(DX_SCREEN_BACK);      // 描画スクリーンを裏側に指定
-    SetWaitVSyncFlag(TRUE);             // VSYNCを有効にする
-    usable.AfterInit();                 // DirectX初期化後処理
-    usable.MainLoop();                  // ゲーム本体(メインループ)
-    usable.End();                       // ゲーム終了後処理
-    DxLib_End();                        // ＤＸライブラリ使用の終了処理
-    return 0;                           // ソフトの終了
+	SetGraphMode(GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT, 32);
+	SetDrawScreen(DX_SCREEN_BACK);      // 描画スクリーンを裏側に指定
+	SetWaitVSyncFlag(TRUE);             // VSYNCを有効にする
+	usable.AfterInit();                 // DirectX初期化後処理
+	usable.MainLoop();                  // ゲーム本体(メインループ)
+	usable.End();                       // ゲーム終了後処理
+	DxLib_End();                        // ＤＸライブラリ使用の終了処理
+	return 0;                           // ソフトの終了
 }

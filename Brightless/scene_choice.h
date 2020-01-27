@@ -9,12 +9,12 @@ class Choice_Bg : public Sprite
 {
 public:
     void init(Choice_Bg* choice_bg);
-    void update(Choice_Bg* choice_bg);
+    void update(Choice_Bg* choice_bg,Usable* usable);
     void draw(Choice_Bg* choice_bg);
     void end(Choice_Bg* choice_bg);
 
 private:
-
+    int timer = 0;
 };
 
 class Choice_Conduct

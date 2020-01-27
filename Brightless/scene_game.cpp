@@ -34,10 +34,10 @@ void Game_Bg::end()
 
 void Game_Conduct::updateDebug(Usable* usable)
 {
-    if (Input::GetInstance()->GetKeyDown(KEY_INPUT_1)) usable->changeSceneStateInit(Title);
-    if (Input::GetInstance()->GetKeyDown(KEY_INPUT_2)) usable->changeSceneStateInit(Choice);
-    if (Input::GetInstance()->GetKeyDown(KEY_INPUT_3)) usable->changeSceneStateInit(Game);
-}
+    //if (Input::GetInstance()->GetKeyDown(KEY_INPUT_1)) usable->changeSceneStateInit(Title);
+    //if (Input::GetInstance()->GetKeyDown(KEY_INPUT_2)) usable->changeSceneStateInit(Choice);
+    //if (Input::GetInstance()->GetKeyDown(KEY_INPUT_3)) usable->changeSceneStateInit(Game);
+} 
 
 void Game_Flag::init()
 {
@@ -50,7 +50,7 @@ void Game_Flag::init()
 void Game_Flag::update(Usable* usable)
 {
     //if (Input::GetInstance()->GetKeyDown(KEY_INPUT_9)) start_flag = true;
-    if (Input::GetInstance()->GetKeyDown(KEY_INPUT_0)) end_flag = true;
+    //if (Input::GetInstance()->GetKeyDown(KEY_INPUT_0)) end_flag = true;
 
     if (start_flag == false) { start_timer++; }
     if (start_timer > 325) { start_flag = true; }
@@ -61,6 +61,11 @@ void Game_Flag::update(Usable* usable)
     }
     
     if (end_flag == true && start_timer < 0)
+    {
+        usable->changeSceneStateInit(Choice);
+    }
+    //ƒŠƒZƒbƒg
+    if (Input::GetInstance()->GetButton(PL_1,XINPUT_BUTTON_START))
     {
         usable->changeSceneStateInit(Title);
     }

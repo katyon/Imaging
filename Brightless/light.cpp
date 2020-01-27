@@ -11,11 +11,11 @@
 // 関数 ----------------------------------------------------------------------------------------
 void Light::init()
 {
-    width = 6000;
-    height = 200;
-    angle = 0;
+    width = 60000;
+    height = 500;
+    angle = -88;
     rad = 0;
-    pos.set(0, 200);
+    pos.set(0, 1000);
     posM.set(pos.x, pos.y);
     posA.set(0, 0);
     posB.set(0, 0);
@@ -58,12 +58,12 @@ void Light::end()
 void Light::angleManager()
 {
     // キーボード
-    if (Input::GetInstance()->GetKey(KEY_INPUT_F)) pos.x -= LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_H)) pos.x += LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_T)) pos.y -= LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_G)) pos.y += LIGHT_MOVE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_Z)) angle -= LIGHT_ANGLE_SPEED;
-    if (Input::GetInstance()->GetKey(KEY_INPUT_X)) angle += LIGHT_ANGLE_SPEED;
+    //if (Input::GetInstance()->GetKey(KEY_INPUT_F)) pos.x -= LIGHT_MOVE_SPEED;
+    //if (Input::GetInstance()->GetKey(KEY_INPUT_H)) pos.x += LIGHT_MOVE_SPEED;
+    //if (Input::GetInstance()->GetKey(KEY_INPUT_T)) pos.y -= LIGHT_MOVE_SPEED;
+    //if (Input::GetInstance()->GetKey(KEY_INPUT_G)) pos.y += LIGHT_MOVE_SPEED;
+    //if (Input::GetInstance()->GetKey(KEY_INPUT_Z)) angle -= LIGHT_ANGLE_SPEED;
+    //if (Input::GetInstance()->GetKey(KEY_INPUT_X)) angle += LIGHT_ANGLE_SPEED;
     // 箱コン
     if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Left))    pos.x -= LIGHT_MOVE_SPEED;
     if (Input::GetInstance()->GetRightThumb(PL_1, Roughly_Right))   pos.x += LIGHT_MOVE_SPEED;

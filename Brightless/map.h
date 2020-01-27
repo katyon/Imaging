@@ -5,8 +5,8 @@
 #include "scene_game.h"
 
 // íËêî ----------------------------------------------------
-#define		MAPCHIP_H_MAX		(60)
-#define		MAPCHIP_V_MAX		(34)
+#define		MAPCHIP_H_MAX		(120)
+#define		MAPCHIP_V_MAX		(80)
 #define		SCREEN_CHIP_H_MAX	(30)
 #define		SCREEN_CHIP_V_MAX	(17)
 #define		MAPCHIP_SIZE		(64)
