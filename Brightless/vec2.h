@@ -1,7 +1,6 @@
 #pragma once
 #include <cmath>
 
-
 template <class T>
 class vec2 {
 public:

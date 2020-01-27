@@ -1,6 +1,5 @@
 #pragma once
 // インクルード ---------------------------------------------
-#include "common.h"
 #include "light.h"
 #include "player.h"
 
@@ -15,14 +14,14 @@
 class MapData : public Sprite
 {
 public:
-	void	init();
-	void	update(Player* obj);
-	void	draw();
+    void	init();
+    void	update(Light* light, Player* obj);
+    void	draw();
 
-	float	calRelative();
-	void	collMapChipWithPlayer(Player* obj);
+    float	calRelative();
+    void	collMapChipWithPlayer(Player* obj);
     void    collMapChipWithLight(Light* light);
-	void	drawMapChip();
+    void	drawMapChip();
 private:
 };
 

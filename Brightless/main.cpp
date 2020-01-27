@@ -59,7 +59,6 @@ void Scene_Title::update(int GameTime)
 void Scene_Title::draw(int GameTime)
 {
     title_bg.draw(&title_bg);
-    sys.drawDebugString(&light, &player);      // debug
 }
 
 // タイトル終了処理
@@ -93,7 +92,6 @@ void Scene_Choice::update(int GameTime)
 void Scene_Choice::draw(int GameTime)
 {
     choice_bg.draw(&choice_bg);
-    sys.drawDebugString(&light, &player);              // debug
 }
 
 // ステージ選択終了処理
@@ -127,8 +125,8 @@ void Scene_Game::update(int GameTime)
     game_bg.update();
     game_conduct.updateDebug(&usable);   // debug
     player.update();
-    map.update(&player);
     light.update();
+    map.update(&light, &player);
     Scroll::getInstance().update(&player, &map, &game_bg);
 }
 
@@ -140,7 +138,6 @@ void Scene_Game::draw(int GameTime)
     game_bg.draw();
     map.draw();
     player.draw();
-    sys.drawDebugString(&light, &player);      // debug
     SetUseMaskScreenFlag(false);
     light.afterDraw();
 }
@@ -258,7 +255,7 @@ void Usable::MainLoop(void)
             game.draw(gameTime);            // ゲーム描画処理
             break;
         }
-
+        sys.drawDebugString(&light, &player);      // debug
         ScreenFlip();   // VSYNCを待つ
 
         // ESCキーだけは常に監視。押されたら直ちに終了
