@@ -11,22 +11,43 @@ void Player::init()
 	onground = 1;
 	isjump = 0;
 	state = PlayerState::None;
-	handle = LoadGraph("Data\\Images\\Player\\pl_material.png");
+	handle = LoadGraph("Data\\Images\\Player\\Player.png");
 	movement_pass = true;
 	move_angle = 0;
+	anime_timer = 0;
 }
 
-void Player::update()
+void Player::update(Game_Flag* game_flag)
 {
-	Player::inputMovement();
+	Player::inputMovement(game_flag);
 	Player::affectGravity();
 
 	Player::movePlayer();
+	anime_timer++;
 }
 
 void Player::draw()
 {
-	DrawGraphF(rel_posX, rel_posY, handle, TRUE);
+	if (speedX != 0 && onground == true)
+	{
+		if (flip == false) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH * ((anime_timer % 30) / 10), PLAYER_HEIGHT * 1, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, FALSE); }
+		if (flip == true) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH * ((anime_timer % 30) / 10), PLAYER_HEIGHT * 1, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, TRUE); }
+	}
+	if (speedY < 0 && onground == false)
+	{
+		if (flip == false) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH*0, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, FALSE); }
+		if (flip == true) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH*0, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, TRUE); }
+	}
+	if (speedY >= 0 && onground == false)
+	{
+		if (flip == false) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, FALSE); }
+		if (flip == true) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH, PLAYER_HEIGHT * 2, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, TRUE); }
+	}
+	if (speedX == 0 && speedY == 0 && (onground==true || movement_pass==false))
+	{
+		if (flip == false) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH * ((anime_timer % 30) / 10), PLAYER_HEIGHT * 0, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, FALSE); }
+		if (flip == true) { DrawRectGraphF(rel_posX, rel_posY, PLAYER_WIDTH * ((anime_timer % 30) / 10), PLAYER_HEIGHT * 0, PLAYER_WIDTH, PLAYER_HEIGHT, handle, TRUE, TRUE); }
+	}
 }
 
 
@@ -34,11 +55,12 @@ void Player::draw()
 
 
 
-void Player::inputMovement()
+void Player::inputMovement(Game_Flag* game_flag)
 {
 	speedX = 0;
 
 	//コントローラー入力
+	if (game_flag->getStartFlag() == true && game_flag->getEndFlag() == false)
 	{
 		//左右移動
 		if (Input::GetInstance()->GetLeftThumb(PL_1, Roughly_Right))
@@ -55,10 +77,20 @@ void Player::inputMovement()
 		}
 
 		//ジャンプ
+		if (Input::GetInstance()->GetButton(PL_1, XINPUT_BUTTON_A))
+		{
+			if (onground && !isjump)
+			{
+				speedY = JUMP_POW;
+				isjump = true;
+				onground = false;
+				movement_pass = true;
+			}
+		}
 	}
 
 	//キーボード入力
-	{
+	if (game_flag->getStartFlag() == true && game_flag->getEndFlag() == false) {
 		//左右移動
 		if (Input::GetInstance()->GetKey(KEY_INPUT_RIGHT))
 		{
@@ -107,12 +139,9 @@ void Player::movePlayer()
 		posY -= sin(move_angle) * (PLAYER_SPEED);
 	}
 
-	////プレイヤーキャラクターの向き反転処理
-	//if (speedX > 0) { flip = false; }
-	//else { flip = true; }
-
 	// ジャンプから降下への切替
 	if (speedY >= 0) { isjump = false; }
+
 
 }
 

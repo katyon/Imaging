@@ -10,7 +10,7 @@ class Title_Bg : public Sprite
 {
 public:
     void init(Title_Bg* title_bg);
-    void update(Title_Bg* title_bg);
+    void update(Title_Bg* title_bg,Usable* usable);
     void draw(Title_Bg* title_bg);
     void end(Title_Bg* title_bg);
 };

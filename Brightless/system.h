@@ -25,3 +25,4 @@ bool judgeCollPointAndLine(float line_start_x, float line_start_y, float line_en
 
 void judgePenetrateLine(Player player, float line_start_x, float line_start_y, float line_end_x, float line_end_y);
 void judgeIntersection(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4,Player* player);
+bool judgeIntersectionY(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Player* player);

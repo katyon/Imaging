@@ -2,6 +2,7 @@
 
 // インクルード ---------------------------------------------
 #include "common.h"
+#include "scene_game.h"
 
 // 定数 ----------------------------------------------------
 #define PLAYER_WIDTH		(100.0f)
@@ -24,6 +25,7 @@ private:
 	bool		onground;
 	bool		isjump;
 	PlayerState state;
+	int			anime_timer;
 
 	float		correctX, correctY;
 	bool		movement_pass;
@@ -31,10 +33,10 @@ private:
 
 public:
 	void		init();
-	void		update();
+	void		update(Game_Flag* game_flag);
 	void		draw();
 
-	void		inputMovement();
+	void		inputMovement(Game_Flag* game_flag);
 	void		movePlayer();
 	void		affectGravity();
 

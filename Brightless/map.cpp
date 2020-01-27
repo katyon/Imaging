@@ -31,7 +31,7 @@ static int test_map[MAPCHIP_V_MAX][MAPCHIP_H_MAX]
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,2,2,2,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,1,1,1,1,1,10,1,1,1,1,6,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,1,1,1,1,1,9,1,1,1,1,6,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,1,1,1,1,1,1,1,1,6,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,1,1,1,1,1,1,6,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,6,1,1,1,1,6,0,0,0,0,0,0,
@@ -63,20 +63,20 @@ void MapData::init(Player* player)
 	}
 }
 
-void MapData::update(Player* obj)
+void MapData::update(Player* obj,Game_Flag* game_flag)
 {
-    MapData::collMapChipWithPlayer(obj);
+    MapData::collMapChipWithPlayer(obj,game_flag);
 }
 
-void MapData::draw()
+void MapData::draw(Game_Flag* game_flag)
 {
     MapData::drawMapChip();
-	MapData::drawElevatorFrame();
+	MapData::drawElevatorFrame(game_flag);
 }
 
 
 
-void MapData::collMapChipWithPlayer(Player* obj)
+void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
 {
 	if (obj->getMovementPass())
 	{
@@ -184,6 +184,15 @@ void MapData::collMapChipWithPlayer(Player* obj)
 					obj->setOnGround(true);
 				}
 			}
+			//ƒS[ƒ‹”»’è
+			if (test_map[Ver][Hor] == GoalSpawner)
+			{
+				if (player_coll_bottom == chip_top && abs((obj->getPosX()+(PLAYER_WIDTH/2)) - Hor*MAPCHIP_SIZE)<5)
+				{
+					game_flag->setEndFlag(true);
+				}
+
+			}
 		}
 	}
 }
@@ -244,29 +253,47 @@ void MapData::drawElevator()
 	}
 }
 
-void MapData::drawElevatorFrame()
+void MapData::drawElevatorFrame(Game_Flag* game_flag)
 {
+	int anime_frame = 0;
+	if (game_flag->getStartTimer() < 100) { anime_frame = 0; }
+	else if (game_flag->getStartTimer() >= 100 && game_flag->getStartTimer() < 213) { anime_frame = 1; }
+	else if (game_flag->getStartTimer() >= 213 && game_flag->getStartTimer() < 216) { anime_frame = 2; }
+	else if (game_flag->getStartTimer() >= 216 && game_flag->getStartTimer() < 219) { anime_frame = 3; }
+	else if (game_flag->getStartTimer() >= 219 && game_flag->getStartTimer() < 222) { anime_frame = 4; }
+	else if (game_flag->getStartTimer() >= 222 && game_flag->getStartTimer() < 225) { anime_frame = 5; }
+	else if (game_flag->getStartTimer() >= 225) { anime_frame = 6; }
+
 	for (int Ver = 0; Ver < MAPCHIP_V_MAX; Ver++)
 	{
 		for (int Hor = 0; Hor < MAPCHIP_H_MAX; Hor++)
 		{
 			if (test_map[Ver][Hor] == PlayerSpawner || test_map[Ver][Hor] == GoalSpawner)
 			{
-				DrawRectGraphF(((Hor * MAPCHIP_SIZE) - (ELEVATOR_WIDTH / 2)) + rel_posX, ((Ver * MAPCHIP_SIZE) - ELEVATOR_HEIGHT) + rel_posY, ELEVATOR_WIDTH * 0, 0, ELEVATOR_WIDTH, ELEVATOR_HEIGHT, goal_frame_handle, TRUE);
+				DrawRectGraphF(((Hor * MAPCHIP_SIZE) - (ELEVATOR_WIDTH / 2)) + rel_posX, ((Ver * MAPCHIP_SIZE) - ELEVATOR_HEIGHT) + rel_posY, ELEVATOR_WIDTH * anime_frame, 0, ELEVATOR_WIDTH, ELEVATOR_HEIGHT, goal_frame_handle, TRUE);
 			}
 		}
 	}
 }
 
-void MapData::drawElevatorDoor()
+void MapData::drawElevatorDoor(Game_Flag* game_flag)
 {
+	int anime_frame = 0;
+	if (game_flag->getStartTimer() < 100) { anime_frame = 0; }
+	else if (game_flag->getStartTimer() >= 100 && game_flag->getStartTimer() < 213) { anime_frame = 1; }
+	else if (game_flag->getStartTimer() >= 213 && game_flag->getStartTimer() < 216) { anime_frame = 2; }
+	else if (game_flag->getStartTimer() >= 216 && game_flag->getStartTimer() < 219) { anime_frame = 3; }
+	else if (game_flag->getStartTimer() >= 219 && game_flag->getStartTimer() < 222) { anime_frame = 4; }
+	else if (game_flag->getStartTimer() >= 222 && game_flag->getStartTimer() < 225) { anime_frame = 5; }
+	else if (game_flag->getStartTimer() >= 225) { anime_frame = 6; }
+
 	for (int Ver = 0; Ver < MAPCHIP_V_MAX; Ver++)
 	{
 		for (int Hor = 0; Hor < MAPCHIP_H_MAX; Hor++)
 		{
 			if (test_map[Ver][Hor] == PlayerSpawner || test_map[Ver][Hor] == GoalSpawner)
 			{
-				DrawRectGraphF(((Hor * MAPCHIP_SIZE) - (ELEVATOR_WIDTH / 2)) + rel_posX, ((Ver * MAPCHIP_SIZE) - ELEVATOR_HEIGHT) + rel_posY, ELEVATOR_WIDTH * 0, 0, ELEVATOR_WIDTH, ELEVATOR_HEIGHT, goal_door_handle, TRUE);
+				DrawRectGraphF(((Hor * MAPCHIP_SIZE) - (ELEVATOR_WIDTH / 2)) + rel_posX, ((Ver * MAPCHIP_SIZE) - ELEVATOR_HEIGHT) + rel_posY, ELEVATOR_WIDTH * anime_frame, 0, ELEVATOR_WIDTH, ELEVATOR_HEIGHT, goal_door_handle, TRUE);
 			}
 		}
 	}

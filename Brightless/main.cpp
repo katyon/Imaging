@@ -27,6 +27,7 @@ Choice_Conduct  choice_conduct;
 Scene_Game      game;
 Game_Bg         game_bg;
 Game_Conduct    game_conduct;
+Game_Flag       game_flag;
 Player          player;
 MapData         map;
 Light           light;
@@ -51,7 +52,7 @@ void Scene_Title::init(void)
 // タイトル更新処理
 void Scene_Title::update(int GameTime)
 {
-    title_bg.update(&title_bg);
+    title_bg.update(&title_bg,&usable);
     title_conduct.updateDebug(&title_conduct, &usable);     // debug
 }
 
@@ -115,6 +116,7 @@ void Scene_Game::init(void)
 {
     mask.init();
     game_bg.init();
+    game_flag.init();
     player.init();
     map.init(&player);
     light.init();
@@ -126,10 +128,22 @@ void Scene_Game::update(int GameTime)
 {
     game_bg.update();
     game_conduct.updateDebug(&usable);   // debug
-    player.update();
-    judgeIntersection(player.getPosX()+(PLAYER_WIDTH/2), player.getPosY()+PLAYER_HEIGHT, player.getPosX()+(PLAYER_WIDTH / 2)+player.getSpeedX(), player.getPosY()+PLAYER_HEIGHT+player.getSpeedY(), 400, 400, 1600, 1900,&player);
+    game_flag.update(&usable);
+    player.update(&game_flag);
+    //if (!judgeCollPointAndLine(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, 400, 400, 1600, 1900, &player) &&
+    //    !judgeCollPointAndLine(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, 400 - 1200, 1900, 1600 - 1200, 400, &player))
+    //{
+    //    player.setMovementPass(true);
+    //}
+    judgeIntersection(player.getPosX()+(PLAYER_WIDTH/2), player.getPosY() + PLAYER_HEIGHT, player.getPosX()+(PLAYER_WIDTH / 2)+player.getSpeedX(), player.getPosY()+PLAYER_HEIGHT+player.getSpeedY(), 400, 400, 1600, 1900,&player);
     judgeIntersection(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT, player.getPosX() + (PLAYER_WIDTH / 2) + player.getSpeedX(), player.getPosY() + PLAYER_HEIGHT + player.getSpeedY(), 400-1200, 1900, 1600-1200, 400, &player);
-    map.update(&player);
+    if (!judgeIntersectionY(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT-1, player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT + 2, 400, 400, 1600, 1900, &player) &&
+        !judgeIntersectionY(player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT-1, player.getPosX() + (PLAYER_WIDTH / 2), player.getPosY() + PLAYER_HEIGHT + 2, 400 - 1200, 1900, 1600 - 1200, 400, &player))
+    {
+        player.setMovementPass(true);
+    }
+    map.update(&player, &game_flag);
+    map.update(&player,&game_flag);
     light.update();
     Scroll::getInstance().update(&player, &map, &game_bg);
 }
@@ -140,20 +154,21 @@ void Scene_Game::draw(int GameTime)
     mask.draw(&light);  // 必ず最初に
 
     game_bg.draw();
-    map.draw();
+    map.draw(&game_flag);
     player.draw();
-    map.drawElevatorDoor();
+    map.drawElevatorDoor(&game_flag);
     sys.drawDebugString(&player);      // debug
-    SetUseMaskScreenFlag(false);
-    light.afterDraw();
     DrawLine(400+Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), 1600 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
     DrawLine(400-1200 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), 1600-1200 + Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
+    SetUseMaskScreenFlag(FALSE);
+    light.afterDraw();
 }
 
 // ゲーム終了処理
 void Scene_Game::end(void)
 {
     game_bg.end();
+    game_flag.end();
     light.end();
     mask.end();
 }

@@ -8,12 +8,15 @@
 // ŠÖ” ----------------------------------------------------------------------------------------
 void Title_Bg::init(Title_Bg* title_bg)
 {
-    title_bg->handle = LoadGraph("Data\\Images\\Bg\\Title_Bg.png");
+    title_bg->handle = LoadGraph("Data\\Images\\Bg\\Title.png");
 }
 
-void Title_Bg::update(Title_Bg* title_bg)
+void Title_Bg::update(Title_Bg* title_bg, Usable* usable)
 {
-
+    if (Input::GetInstance()->GetButtonDownAll(PL_1))
+    {
+        usable->changeSceneStateInit(Game);
+    }
 }
 
 void Title_Bg::draw(Title_Bg* title_bg)

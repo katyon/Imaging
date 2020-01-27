@@ -3,6 +3,7 @@
 #include "common.h"
 #include "light.h"
 #include "player.h"
+#include "scene_game.h"
 
 // íËêî ----------------------------------------------------
 #define		MAPCHIP_H_MAX		(60)
@@ -14,21 +15,23 @@
 #define		ELEVATOR_HEIGHT		(64*4)
 
 // ÉNÉâÉXêÈåæ ----------------------------------------------
-enum CHIP_DATA { Void, Floor, CatWalk, HandRail, HandRail_R, HandRail_L, Floor_Coner, CatWalk_Corner, PlayerSpawner, StartSpawner, GoalSpawner };
+enum CHIP_DATA { Void, Floor, CatWalk, HandRail, HandRail_R, HandRail_L, Floor_Coner, CatWalk_Corner, PlayerSpawner, GoalSpawner };
 class MapData : public Sprite
 {
 public:
 	void	init(Player* player);
-	void	update(Player* obj);
-	void	draw();
+	void	draw(Game_Flag* game_flag);
+	void	update(Player* obj,Game_Flag* game_flag);
 
 	float	calRelative();
-	void	collMapChipWithPlayer(Player* obj);
+	void	collMapChipWithPlayer(Player* obj,Game_Flag* game_flag);
     void    collMapChipWithLight(Light* light);
 	void	drawMapChip();
 	void	drawElevator();
-	void	drawElevatorFrame();
-	void	drawElevatorDoor();
+	void	drawElevatorFrame(Game_Flag* game_flag);
+	void	drawElevatorDoor(Game_Flag* game_flag);
+
+	void	judgeGoal();
 
 	int		get_GoalHandle() { return goal_handle; }
 	void	set_GoalHandle(int g) { goal_handle = g; }

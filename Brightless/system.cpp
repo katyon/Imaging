@@ -37,7 +37,7 @@ bool judgeCollPointAndLine(float line_start_x, float line_start_y, float line_en
     float length_point = sqrtf(point_vector_x * point_vector_x + point_vector_y * point_vector_y);
 
     //※floorfは浮動小数点計算の誤差修正(整数単位での判定)
-    if (floorf(line_vector_x * point_vector_x + line_vector_y * point_vector_y) == floorf(length_line * length_point)
+    if (floorf((line_vector_x * point_vector_x + line_vector_y * point_vector_y)) == floorf((length_line * length_point))
         && length_line >= length_point)
     {
         return true;
@@ -171,9 +171,9 @@ void judgePenetrateLine(Player player, float line_start_x, float line_start_y, f
 //A:プレイヤーの座標 B:移動後のプレイヤーの座標 C:線分の始点　D:線分の終点    (必ずC<Dが成り立つ状態で使用する)
 void judgeIntersection(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Player* player)
 {
-    if (x1<x3 || x1>x4)
+    if ((x1<x3 || x1>x4))
     {
-        player->setMovementPass(true);
+        //player->setMovementPass(true);
     }
 
    if (((x1 - x2) * (y3 - y1) + (y1 - y2) * (x1 - x3)) *
@@ -216,4 +216,26 @@ void judgeIntersection(float x1, float y1, float x2, float y2, float x3, float y
            player->setMovementPass(false);
        }
    }
+}
+
+bool judgeIntersectionY(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4, Player* player)
+{
+
+    if (((x1 - x2) * (y3 - y1) + (y1 - y2) * (x1 - x3)) *
+        ((x1 - x2) * (y4 - y1) + (y1 - y2) * (x1 - x4)) < 0)
+    {
+        if (((x3 - x4) * (y1 - y3) + (y3 - y4) * (x3 - x1)) *
+            ((x3 - x4) * (y2 - y3) + (y3 - y4) * (x3 - x2)) < 0)
+        {
+            float S1 = ((x3 - x4) * (y1 - y4) - (y3 - y4) * (x1 - x4)) / 2;
+            float S2 = ((x3 - x4) * (y4 - y2) - (y3 - y4) * (x4 - x2)) / 2;
+
+            float intersection_x = floorf(x1 + (x2 - x1) * S1 / (S1 + S2) + 0.5f);
+            float intersection_y = floorf(y1 + (y2 - y1) * S1 / (S1 + S2) + 0.5f);
+            return true;
+            
+        }
+    }
+    //player->setMovementPass(true);
+    return false;
 }
