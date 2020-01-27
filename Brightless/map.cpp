@@ -1,7 +1,7 @@
 #include "DxLib.h"
+#include "common.h"
 #include "map.h"
 #include "relative_position.h"
-
 
 static int test_map[MAPCHIP_V_MAX][MAPCHIP_H_MAX]
 {
@@ -63,6 +63,7 @@ void MapData::init(Player* player)
 	}
 }
 
+
 void MapData::update(Player* obj,Game_Flag* game_flag)
 {
     MapData::collMapChipWithPlayer(obj,game_flag);
@@ -74,9 +75,7 @@ void MapData::draw(Game_Flag* game_flag)
 	MapData::drawElevatorFrame(game_flag);
 }
 
-
-
-void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
+void MapData::collMapChipWithPlayer(Player* obj, Game_Flag* game_flag)
 {
 	if (obj->getMovementPass())
 	{
@@ -132,7 +131,7 @@ void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
 							if (player_coll_left + 15 < chip_right && player_coll_right - 15 > chip_left&& player_coll_top < chip_bottom && player_coll_bottom - 195 > chip_top)
 							{
 								//判定のあったチップの下方向にチップが存在しなければ処理を行う
-								if ((test_map[Ver + 1][Hor] == 0 || test_map[Ver + 1][Hor] == 3 || test_map[Ver + 1][Hor] == 4 || test_map[Ver + 1][Hor] == 5) && Ver != (MAPCHIP_V_MAX-1))
+								if ((test_map[Ver + 1][Hor] == 0 || test_map[Ver + 1][Hor] == 3 || test_map[Ver + 1][Hor] == 4 || test_map[Ver + 1][Hor] == 5) && Ver != (MAPCHIP_V_MAX - 1))
 								{
 									obj->setPosY(chip_bottom);
 									obj->setSpeedY(0);
@@ -149,7 +148,7 @@ void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
 				player_coll_top = obj->getPosY();
 				player_coll_bottom = obj->getPosY() + PLAYER_HEIGHT;
 
-				if (player_coll_left < chip_right && player_coll_right > chip_left&& player_coll_top+15 < chip_bottom && player_coll_bottom-15 > chip_top)
+				if (player_coll_left < chip_right && player_coll_right > chip_left&& player_coll_top + 15 < chip_bottom && player_coll_bottom - 15 > chip_top)
 				{
 					//横方向の押し戻し処理
 					if (obj->getSpeedX() != 0)
@@ -157,7 +156,7 @@ void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
 						if (obj->getSpeedX() > 0)
 						{
 							//判定のあったチップの左方向にチップが存在しなければ処理を行う
-							if ((test_map[Ver][Hor-1] == 0 || test_map[Ver][Hor - 1] == 3 || test_map[Ver][Hor - 1] == 4 || test_map[Ver][Hor - 1] == 5) && Hor != 0)
+							if ((test_map[Ver][Hor - 1] == 0 || test_map[Ver][Hor - 1] == 3 || test_map[Ver][Hor - 1] == 4 || test_map[Ver][Hor - 1] == 5) && Hor != 0)
 							{
 								obj->setPosX(chip_left - PLAYER_WIDTH);
 							}
@@ -165,7 +164,7 @@ void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
 						if (obj->getSpeedX() < 0)
 						{
 							//判定のあったチップの右方向にチップが存在しなければ処理を行う
-							if ((test_map[Ver][Hor + 1] == 0 || test_map[Ver][Hor + 1] == 3 || test_map[Ver][Hor + 1] == 4 || test_map[Ver][Hor + 1] == 5) && Hor != (MAPCHIP_H_MAX-1))
+							if ((test_map[Ver][Hor + 1] == 0 || test_map[Ver][Hor + 1] == 3 || test_map[Ver][Hor + 1] == 4 || test_map[Ver][Hor + 1] == 5) && Hor != (MAPCHIP_H_MAX - 1))
 							{
 								obj->setPosX(chip_right);
 							}
@@ -187,7 +186,7 @@ void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
 			//ゴール判定
 			if (test_map[Ver][Hor] == GoalSpawner)
 			{
-				if (player_coll_bottom == chip_top && abs((obj->getPosX()+(PLAYER_WIDTH/2)) - Hor*MAPCHIP_SIZE)<5)
+				if (player_coll_bottom == chip_top && abs((obj->getPosX() + (PLAYER_WIDTH / 2)) - Hor * MAPCHIP_SIZE) < 5)
 				{
 					game_flag->setEndFlag(true);
 				}
@@ -199,12 +198,54 @@ void MapData::collMapChipWithPlayer(Player* obj,Game_Flag* game_flag)
 
 void MapData::collMapChipWithLight(Light* light)
 {
+    float chip_left;
+    float chip_right;
+    float chip_top;
+    float chip_bottom;
+    vec2<float> chip_posA;
+    vec2<float> chip_posB;
+    vec2<float> chip_posC;
+    vec2<float> chip_posD;
+
     //チップ当たり判定処理
     for (int Ver = 0; Ver < MAPCHIP_V_MAX; Ver++)
     {
         for (int Hor = 0; Hor < MAPCHIP_H_MAX; Hor++)
         {
-            
+            if (test_map[Ver][Hor] == 4)
+            {
+                //マップチップ4点座標
+                chip_left = Hor * MAPCHIP_SIZE;
+                chip_right = (Hor + 1) * MAPCHIP_SIZE;
+                chip_top = Ver * MAPCHIP_SIZE;
+                chip_bottom = (Ver + 1) * MAPCHIP_SIZE;
+                chip_posA.set(chip_left + Scroll::getInstance().getScrollAmountX(), chip_top + Scroll::getInstance().getScrollAmountY());
+                chip_posB.set(chip_left + Scroll::getInstance().getScrollAmountX(), chip_bottom + Scroll::getInstance().getScrollAmountY());
+                chip_posC.set(chip_right + Scroll::getInstance().getScrollAmountX(), chip_bottom + Scroll::getInstance().getScrollAmountY());
+                chip_posD.set(chip_right + Scroll::getInstance().getScrollAmountX(), chip_top + Scroll::getInstance().getScrollAmountY());
+
+                if (light->judgeCollSquare(light->posA, light->posB, light->posC, light->posD, chip_posA, chip_posB, chip_posC, chip_posD))
+                {
+                    //light->after_posA.set(0,0);
+                    //light->after_posB.set(0, 1080);
+                    //light->after_posC.set(1920, 1080);
+                    //light->after_posD.set(1920, 0);
+                    light->after_posA.set(chip_left, chip_top - 1000);
+                    light->after_posB.set(chip_left, chip_bottom + 500);
+                    light->after_posC.set(chip_right + 500, chip_bottom + 500);
+                    light->after_posD.set(chip_right + 500, chip_top - 1000);
+                    //light->after_posB.set(light->after_posA.x + cos(light->rad + (-90 * PI / 180)) * height, light->after_posA.y - sin(light->rad + (-90 * PI / 180)) * height);
+                    //light->after_posC.set(light->after_posB.x + cos(light->rad) * width, light->after_posB.y - sin(light->rad) * width);
+                    //light->after_posD.set(light->after_posC.x + cos(light->rad + (90 * PI / 180)) * height, light->after_posC.y - sin(light->rad + (90 * PI / 180)) * height);
+                }
+                else
+                {
+                    //light->after_posA.set(0, 0);
+                    //light->after_posB.set(0, 0);
+                    //light->after_posC.set(0, 0);
+                    //light->after_posD.set(0, 0);
+                }
+            }
         }
     }
 }

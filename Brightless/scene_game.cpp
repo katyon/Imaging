@@ -1,6 +1,7 @@
 // インクルード ----------------------------------------------------------------------------------
 #include "DxLib.h"
 
+#include "common.h"
 #include "input.h"
 #include "scene_game.h"
 #include "relative_position.h"

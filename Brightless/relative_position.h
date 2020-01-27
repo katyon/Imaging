@@ -1,8 +1,8 @@
 #pragma once
-#include "map.h"
-#include "player.h"
-#include "system.h"
 #include "scene_game.h"
+#include "map.h"
+
+
 
 #define	ABSOLUTE_SCROLL_DESTINATION_L		(400)
 #define	ABSOLUTE_SCROLL_DESTINATION_R		(SCREEN_WIDTH - 400)

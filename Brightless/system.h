@@ -1,9 +1,5 @@
 #pragma once
-
-// インクルード ---------------------------------------------------------
-#include "common.h"
 #include "light.h"
-#include "main.h"
 #include "player.h"
 
 // 定数 ----------------------------------------------------------------
@@ -14,10 +10,11 @@
 class System
 {
 public:
-    void drawDebugString(Player* player);
+    void    drawDebugString(Light* light, Player* player);
 
 private:
     unsigned int cr = 0;
+
 };
 
 

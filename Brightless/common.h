@@ -1,4 +1,5 @@
 #pragma once
+#include "vec2.h"
 
 // ’è”’è‹`
 #define GAME_SCREEN_WIDTH	(1920)      // ƒQ[ƒ€‰æ–Ê‚Ì•
@@ -24,6 +25,7 @@ public:
     virtual void setRelPosX(float x) { rel_posX = x; }
     virtual void setRelPosY(float y) { rel_posY = y; }
 protected:
+    vec2<float> vec;
     float posX = 0;
     float posY = 0;
     float rel_posX = 0;

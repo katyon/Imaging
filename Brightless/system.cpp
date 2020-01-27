@@ -2,13 +2,16 @@
 #include "DxLib.h"
 #include <math.h>
 
+#include "common.h"
+#include "main.h"
+#include "player.h"
 #include "relative_position.h"
-#include "input.h"
 #include "system.h"
+#include "vec2.h"
 
 // 関数 ----------------------------------------------------------------------------------------
 // デバック文字を描画
-void System::drawDebugString(Player* player)
+void System::drawDebugString(Light* light, Player* player)
 {
     SetFontSize(25);
     cr = GetColor(0, 200, 200);
@@ -26,7 +29,7 @@ void System::drawDebugString(Player* player)
 }
 
 //線分と点の接触判定
-bool judgeCollPointAndLine(float line_start_x, float line_start_y, float line_end_x, float line_end_y, float point_x,float point_y,Player* player)
+bool judgeCollPointAndLine(float line_start_x, float line_start_y, float line_end_x, float line_end_y, float point_x, float point_y)
 {
     float line_vector_x = line_end_x - line_start_x;
     float line_vector_y = line_end_y - line_start_y;
@@ -86,6 +89,7 @@ bool judgeCollPointAndLine(float line_start_x, float line_start_y, float line_en
 //    }
 //    return false;
 //}
+//
 
 //交点：Intersection
 //void calIntersectionPoint(Player player, float line_start_x, float line_start_y, float line_end_x, float line_end_y)

@@ -60,7 +60,6 @@ void Scene_Title::update(int GameTime)
 void Scene_Title::draw(int GameTime)
 {
     title_bg.draw(&title_bg);
-    sys.drawDebugString(&player);      // debug
 }
 
 // タイトル終了処理
@@ -94,7 +93,6 @@ void Scene_Choice::update(int GameTime)
 void Scene_Choice::draw(int GameTime)
 {
     choice_bg.draw(&choice_bg);
-    sys.drawDebugString(&player);              // debug
 }
 
 // ステージ選択終了処理
@@ -143,7 +141,6 @@ void Scene_Game::update(int GameTime)
         player.setMovementPass(true);
     }
     map.update(&player, &game_flag);
-    map.update(&player,&game_flag);
     light.update();
     Scroll::getInstance().update(&player, &map, &game_bg);
 }
@@ -157,10 +154,10 @@ void Scene_Game::draw(int GameTime)
     map.draw(&game_flag);
     player.draw();
     map.drawElevatorDoor(&game_flag);
-    sys.drawDebugString(&player);      // debug
     DrawLine(400+Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), 1600 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
     DrawLine(400-1200 + Scroll::getInstance().getScrollAmountX(), 1900 + Scroll::getInstance().getScrollAmountY(), 1600-1200 + Scroll::getInstance().getScrollAmountX(), 400 + Scroll::getInstance().getScrollAmountY(), GetColor(120, 200, 0));
     SetUseMaskScreenFlag(FALSE);
+    SetUseMaskScreenFlag(false);
     light.afterDraw();
 }
 
@@ -278,7 +275,7 @@ void Usable::MainLoop(void)
             game.draw(gameTime);            // ゲーム描画処理
             break;
         }
-
+        sys.drawDebugString(&light, &player);      // debug
         ScreenFlip();   // VSYNCを待つ
 
         // ESCキーだけは常に監視。押されたら直ちに終了

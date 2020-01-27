@@ -1,5 +1,7 @@
-#include "relative_position.h"
 #include "input.h"
+#include "player.h"
+#include "relative_position.h"
+#include "system.h"
 
 void Scroll::init()
 {

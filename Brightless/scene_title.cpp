@@ -1,9 +1,11 @@
 // インクルード ----------------------------------------------------------------------------------
 #include "DxLib.h"
 
+#include "common.h"
 #include "input.h"
-#include "scene_title.h"
 #include "main.h"
+#include "scene_title.h"
+#include "system.h"
 
 // 関数 ----------------------------------------------------------------------------------------
 void Title_Bg::init(Title_Bg* title_bg)

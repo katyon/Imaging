@@ -1,6 +1,5 @@
 #pragma once
 // インクルード ---------------------------------------------
-#include "common.h"
 #include "light.h"
 #include "player.h"
 #include "scene_game.h"
@@ -35,6 +34,7 @@ public:
 
 	int		get_GoalHandle() { return goal_handle; }
 	void	set_GoalHandle(int g) { goal_handle = g; }
+
 private:
 	int		goal_handle;
 	int		goal_frame_handle;
